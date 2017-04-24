@@ -14,19 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 
 
 @WebServlet(name = "LikesController")
 public class LikesController extends HttpServlet {
 
+
+    //TODO change to actual user id and postid
+   private int userid = 1;
+   private int postid = 1;
+
+
     @Override
     public void init() throws ServletException {
-
+        Connection connection = CacheConnection.checkOut( this ); // just to cache it
     }
 
     @Override
@@ -36,9 +42,13 @@ public class LikesController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        LikesDAO likes= new LikesDAO(this);
+        likes.addLikes(userid, postid);
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
 
     }
 }

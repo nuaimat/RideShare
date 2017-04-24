@@ -16,7 +16,7 @@ public class LikesDAO {
         this.context = context;
     }
 
-    public void addLikes(int likedid, int userid, int postid, Date datecreated, Date dateupdated) throws SQLException {
+    public void addLikes( int userid, int postid)  {
 
         // Turn on verbose output
         CacheConnection.setVerbose(true);
@@ -24,23 +24,21 @@ public class LikesDAO {
 
         // Get a cached connection
         Connection connection = CacheConnection.checkOut(context);
-        Statement statement  = null;
+        PreparedStatement statement  = null;
         ResultSet rs  = null;
         String     userName   = null;
 
         try {
 
-
-
             String req = "INSERT INTO Likes"
-                    + "(likeid, userid, postid, datecreated,dateupdated) VALUES"
-                    + "(?,?,?,?,?)";
+                    + "( userid, postid) VALUES"
+                    + "(?,?)";
+
             PreparedStatement preparedStatement = connection.prepareStatement(req);
-            preparedStatement.setInt(1, likedid);
-            preparedStatement.setInt(2, userid);
-            preparedStatement.setInt(3, postid);
-            preparedStatement.setTimestamp(4, new Timestamp(datecreated.getTime()));
-            preparedStatement.setTimestamp(5, new Timestamp(dateupdated.getTime()));
+            preparedStatement.setInt(1, userid);
+            preparedStatement.setInt(2, postid);
+           // preparedStatement.setTimestamp(4, new Timestamp(datecreated.getTime()));
+            //preparedStatement.setTimestamp(5, new Timestamp(dateupdated.getTime()));
 // execute insert SQL stetement
              preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -53,6 +51,7 @@ public class LikesDAO {
             if (statement != null)
                 try { statement.close(  ); } catch (SQLException ignore) { }
         }
+
 
         // Return the conection
         CacheConnection.checkIn(connection);
