@@ -10,7 +10,7 @@ import java.util.Vector;
 public class CacheConnection {
     private static boolean verbose           = false;
     private static int     numberConnections = 0;
-    private static Vector  cachedConnections = new Vector(  );
+    private static Vector  cachedConnections = new Vector();
     private static Thread  monitor           = null;
     private static long    MAX_IDLE          = 1000*60*60;
 
@@ -63,10 +63,10 @@ public class CacheConnection {
         if (monitor == null) {
             monitor = new Thread(
 
-                    new Runnable(  ) {
-                        public void run(  ) {
+                    new Runnable() {
+                        public void run() {
                             while(numberConnections > 0) {
-                                runMonitor(  );
+                                runMonitor();
                             }
                             monitor = null;
                             if (verbose) {
@@ -76,9 +76,9 @@ public class CacheConnection {
                     }
             );
             monitor.setDaemon(true);
-            monitor.start(  );
+            monitor.start();
         }
-        return cached.getConnection(  );
+        return cached.getConnection();
     }
 
     synchronized public static void checkIn(Connection c) {
@@ -96,7 +96,7 @@ public class CacheConnection {
                 System.out.println("Vector entry " + Integer.toString(i));
             }
             cached = (CachedConnection)cachedConnections.get(i);
-            conn = cached.getConnection(  );
+            conn = cached.getConnection();
             if (conn == c) {
                 if (verbose) {
                     System.out.println("found cached entry " + Integer.toString(i));
@@ -106,7 +106,7 @@ public class CacheConnection {
         }
         if (found) {
             try {
-                closed = conn.isClosed(  );
+                closed = conn.isClosed();
             }
             catch(SQLException ignore) {
                 closed = true;
@@ -114,8 +114,11 @@ public class CacheConnection {
             if (!closed)
                 cached.setInUse(false);
             else {
-                cachedConnections.remove(i);
-                numberConnections--;
+                if( cachedConnections.size() < i){
+                    cachedConnections.remove(i);
+                    numberConnections--;
+                }
+
             }
         }
         else if (verbose) {
@@ -123,11 +126,11 @@ public class CacheConnection {
         }
     }
 
-    synchronized private static void checkUse(  ) {
+    synchronized private static void checkUse() {
         CachedConnection cached = null;
         Connection       conn   = null;
         int              i      = 0;
-        long             now    = System.currentTimeMillis(  );
+        long             now    = System.currentTimeMillis();
         long             then   = 0;
 
         for (i=numberConnections-1;i>-1;i--) {
@@ -138,18 +141,18 @@ public class CacheConnection {
                                 " for use...");
             }
             cached = (CachedConnection)cachedConnections.get(i);
-            if (!cached.isInUse(  )) {
-                then = cached.getLastUsed(  );
+            if (!cached.isInUse()) {
+                then = cached.getLastUsed();
                 if ((now - then) > MAX_IDLE) {
                     if (verbose) {
                         System.out.println("Cached entry " +
                                 Integer.toString(i) +
                                 " idle too long, being destroyed");
                     }
-                    conn = cached.getConnection(  );
-                    try { conn.close(  ); } catch (SQLException e) {
+                    conn = cached.getConnection();
+                    try { conn.close(); } catch (SQLException e) {
                         System.err.println("Unable to close connection: " +
-                                e.getMessage(  )); }
+                                e.getMessage()); }
                     cachedConnections.remove(i);
                     numberConnections--;
                 }
@@ -157,8 +160,8 @@ public class CacheConnection {
         }
     }
 
-    private static void runMonitor(  ) {
-        checkUse(  );
+    private static void runMonitor() {
+        checkUse();
         if (numberConnections > 0) {
             if (verbose) {
                 System.out.println("CacheConnection monitor going to sleep");
@@ -176,18 +179,18 @@ public class CacheConnection {
         }
     }
 
-    public void finalize(  ) throws Throwable {
+    public void finalize() throws Throwable {
         CachedConnection cached = null;
         for(int i=0;i<numberConnections;i++) {
             cached = (CachedConnection)cachedConnections.get(i);
-            if (cached.getConnection(  ) != null) {
+            if (cached.getConnection() != null) {
                 if (verbose) {
                     System.out.println(
                             "Closing connection on Vector entry " +
                                     Integer.toString(i));
                 }
                 try {
-                    cached.getConnection().close(  );
+                    cached.getConnection().close();
                 }
                 catch(SQLException ignore) {
                     System.err.println("Can't close connection!!!");

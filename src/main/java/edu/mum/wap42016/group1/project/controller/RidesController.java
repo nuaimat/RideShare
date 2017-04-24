@@ -35,7 +35,7 @@ public class RidesController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.setContentType("text/html");
+        /* res.setContentType("text/html");
         PrintWriter out = res.getWriter(  );
         out.println("<html>");
         out.println("<head>");
@@ -54,6 +54,12 @@ public class RidesController extends HttpServlet {
         out.println("Hello  !<p>");
         out.println("You're using a cached connection!<p>");
         out.println("</body>");
-        out.println("</html>");
+        out.println("</html>"); */
+
+        RidesDAO ridesDAO = new RidesDAO(this);
+        List<Ride> currentRides = ridesDAO.getTrips(0);
+
+        req.setAttribute("rides", currentRides);
+        req.getRequestDispatcher("/rides/list.jsp").forward(req, res);
     }
 }

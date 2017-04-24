@@ -11,28 +11,28 @@ public class CachedConnection {
     private long       lastUsed;
     private String     url; // used just as a unique identifier
 
-    public CachedConnection(  ) {
+    public CachedConnection() {
         conn     = null;
         inUse    = false;
-        lastUsed = System.currentTimeMillis(  );
+        lastUsed = System.currentTimeMillis();
         url = "jdbc:mysql://localhost/db";
     }
 
     public CachedConnection(Connection conn, boolean inUse) {
         this.conn     = conn;
         this.inUse    = inUse;
-        this.lastUsed = System.currentTimeMillis(  );
+        this.lastUsed = System.currentTimeMillis();
         this.url = "jdbc:mysql://localhost/db";
     }
 
     public CachedConnection(Connection conn, boolean inUse, String url) {
         this.conn     = conn;
         this.inUse    = inUse;
-        this.lastUsed = System.currentTimeMillis(  );
+        this.lastUsed = System.currentTimeMillis();
         this.url = url;
     }
 
-    public Connection getConnection(  ) {
+    public Connection getConnection() {
         return conn;
     }
 
@@ -40,17 +40,17 @@ public class CachedConnection {
         this.conn = conn;
     }
 
-    public boolean getInUse(  ) {
+    public boolean getInUse() {
         return inUse;
     }
 
-    public boolean isInUse(  ) {
+    public boolean isInUse() {
         return inUse;
     }
 
     public void setInUse(boolean inUse) {
         if (!inUse)
-            lastUsed = System.currentTimeMillis(  );
+            lastUsed = System.currentTimeMillis();
         this.inUse = inUse;
     }
 
@@ -62,7 +62,7 @@ public class CachedConnection {
         this.url = url;
     }
 
-    public long getLastUsed(  ) {
+    public long getLastUsed() {
         return lastUsed;
     }
 }
