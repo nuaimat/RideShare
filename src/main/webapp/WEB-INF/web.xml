@@ -1,18 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.otjcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
-  
-  <!-- sample test -->
+
+
+  <context-param>
+    <param-name>db_name</param-name>
+    <param-value>heroku_8817d68b4a21fb3</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db_host</param-name>
+    <param-value>us-cdbr-iron-east-03.cleardb.net</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db_username</param-name>
+    <param-value>b98acd66dd48b0</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db_password</param-name>
+    <param-value>632d4fc7</param-value>
+  </context-param>
+  <context-param>
+    <param-name>db_conn_string</param-name>
+    <param-value>mysql://b98acd66dd48b0:632d4fc7@us-cdbr-iron-east-03.cleardb.net/heroku_8817d68b4a21fb3?reconnect=true</param-value>
+  </context-param>
+
+  <!-- TripsController -->
   <servlet>
-    <servlet-name>rootServlet</servlet-name>
-    <servlet-class>edu.mum.wap42016.group1.project.RootServlet</servlet-class>
+    <servlet-name>tripsController</servlet-name>
+    <servlet-class>edu.mum.wap42016.group1.project.controller.TripsController</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>rootServlet</servlet-name>
+    <servlet-name>tripsController</servlet-name>
     <url-pattern>/</url-pattern>
+    <url-pattern>/trips</url-pattern>
   </servlet-mapping>
-  
+
+
   
 </web-app>
