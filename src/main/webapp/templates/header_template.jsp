@@ -14,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/style/style.css?<%= (int) (Math.random() * 10000) %>" />">
+    <link rel="stylesheet" href="<c:url value="/style/style.css" />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/main.js?<%= (int) (Math.random() * 10000) %>" />" ></script>
+    <script src="<c:url value="/js/main.js" />" ></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">

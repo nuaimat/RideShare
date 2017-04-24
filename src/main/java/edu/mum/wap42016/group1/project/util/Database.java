@@ -18,7 +18,7 @@ public class Database {
             Class.forName(driver);
         }
         catch(ClassNotFoundException e) {
-            System.err.println("Class not found: " + e.getMessage(  ));
+            System.err.println("Class not found: " + e.getMessage());
             return conn;
         }
         try {
@@ -32,7 +32,7 @@ public class Database {
             conn = DriverManager.getConnection(url, username, password);
         }
         catch(SQLException e) {
-            System.err.println(e.getMessage(  ));
+            System.err.println(e.getMessage());
             System.err.println("in Database.getConnection");
             System.err.println("on getConnection");
             conn = null;
