@@ -27,10 +27,10 @@
     <param-value>mysql://b98acd66dd48b0:632d4fc7@us-cdbr-iron-east-03.cleardb.net/heroku_8817d68b4a21fb3?reconnect=true</param-value>
   </context-param>
 
-  <!-- TripsController -->
+  <!-- RidesController -->
   <servlet>
     <servlet-name>tripsController</servlet-name>
-    <servlet-class>edu.mum.wap42016.group1.project.controller.TripsController</servlet-class>
+    <servlet-class>edu.mum.wap42016.group1.project.controller.RidesController</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
