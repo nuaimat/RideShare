@@ -18,15 +18,17 @@ public class LikesDAO {
 
     public void addLikes(int likedid, int userid, int postid, Date datecreated, Date dateupdated) throws SQLException {
 
+        // Turn on verbose output
+        CacheConnection.setVerbose(true);
+
+
+        // Get a cached connection
+        Connection connection = CacheConnection.checkOut(context);
+        Statement statement  = null;
+        ResultSet rs  = null;
+        String     userName   = null;
 
         try {
-            // Turn on verbose output
-            CacheConnection.setVerbose(true);
-
-
-
-            // Get a cached connection
-            Connection connection = CacheConnection.checkOut(context);
 
 
 
@@ -40,17 +42,20 @@ public class LikesDAO {
             preparedStatement.setTimestamp(4, new Timestamp(datecreated.getTime()));
             preparedStatement.setTimestamp(5, new Timestamp(dateupdated.getTime()));
 // execute insert SQL stetement
-            preparedStatement.executeUpdate();
+             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("DedicatedConnection.doPost(  ) SQLException: " +
                     e.getMessage(  ) );
         } finally {
 
-            //
+            if (rs != null)
+                try { rs.close(  ); } catch (SQLException ignore) { }
+            if (statement != null)
+                try { statement.close(  ); } catch (SQLException ignore) { }
         }
 
         // Return the conection
-
+        CacheConnection.checkIn(connection);
 
     }
 
