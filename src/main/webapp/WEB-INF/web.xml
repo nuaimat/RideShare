@@ -35,7 +35,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>tripsController</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern></url-pattern>
     <url-pattern>/trips</url-pattern>
   </servlet-mapping>
 
