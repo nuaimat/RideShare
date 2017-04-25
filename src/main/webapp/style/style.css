@@ -19,6 +19,7 @@ body { padding-top: 70px; }
     .actions .btn-danger{
         float:right;
     }
+    
 
     table#cart thead { display: none; }
     table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
@@ -33,4 +34,7 @@ body { padding-top: 70px; }
     table#cart tfoot td{display:block; }
     table#cart tfoot td .btn{display:block;}
 
+}
+.register input, .register select{
+	margin: 0.2em 2em;
 }
