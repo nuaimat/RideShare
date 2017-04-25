@@ -2,29 +2,27 @@
  * Created by nuaimat on 4/24/17.
  */
 
-if (navigator.geolocation)
-{
+if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geoLocSuccessFunction, geoLocErrorFunction);
 }
 
-var currentLocation = {};
-function geoLocSuccessFunction(position)
-{
+var currentLocation = {
+    lat: 41.006022900000005,
+    lon: -91.9787329
+};
+function geoLocSuccessFunction(position) {
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
 
     currentLocation.lat = lat;
     currentLocation.lon = long;
-    console.log('Your latitude is :'+lat+' and longitude is '+long);
+    console.log('Your latitude is :' + lat + ' and longitude is ' + long);
 }
 
-function geoLocErrorFunction(position)
-{
-    currentLocation.lat = 41.006022900000005;
-    currentLocation.lon = -91.9787329;
+function geoLocErrorFunction(err) {
+    /*currentLocation.lat = 41.006022900000005;
+     currentLocation.lon = -91.9787329;*/
 }
-
-
 
 
 $(function () {
@@ -36,10 +34,10 @@ $(function () {
             url: $('#new-ride-form').attr("action"), //this is the submit URL
             type: $('#new-ride-form').attr("method"), //or POST
             data: $('#new-ride-form').serialize(),
-            success: function(data){
+            success: function (data) {
                 alert('successfully submitted')
             },
-            error: function(err){
+            error: function (err) {
                 console.log("Error during ajax " + err);
             }
         });
@@ -47,12 +45,13 @@ $(function () {
 
     $("#newRideModal").modal({
         show: false
-    }).on("shown.bs.modal", function()
-    {
+    }).on("shown.bs.modal", function () {
         var map_options = {
             center: new google.maps.LatLng(currentLocation.lat, currentLocation.lon),
             zoom: 11,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDoubleClickZoom: true,
+            streetViewControl: false,
         };
 
         var src_map = new google.maps.Map(document.getElementById("src_map_canvas"), map_options);
@@ -69,10 +68,9 @@ $(function () {
 
         var src_marker = new google.maps.Marker({map: src_map});
 
-        google.maps.event.addListener(src_autocomplete, "place_changed", function()
-        {
+        google.maps.event.addListener(src_autocomplete, "place_changed", function () {
             var place = src_autocomplete.getPlace();
-
+            console.log(place);
             if (place.geometry.viewport) {
                 src_map.fitBounds(place.geometry.viewport);
             } else {
@@ -81,11 +79,14 @@ $(function () {
             }
 
             src_marker.setPosition(place.geometry.location);
+            console.log(place.geometry.location);
+            $("#ridesrc_coords").val(place.geometry.location.lat() + "," + place.geometry.location.lng());
         });
 
-        google.maps.event.addListener(src_map, "click", function(event)
-        {
+        google.maps.event.addListener(src_map, "click", function (event) {
             src_marker.setPosition(event.latLng);
+            src_map.panTo(event.latLng)
+            $("#ridesrc_coords").val(event.latLng.lat() + "," + event.latLng.lng());
         });
 
 
@@ -95,8 +96,7 @@ $(function () {
 
         var dest_marker = new google.maps.Marker({map: dest_map});
 
-        google.maps.event.addListener(dest_autocomplete, "place_changed", function()
-        {
+        google.maps.event.addListener(dest_autocomplete, "place_changed", function () {
             var place = dest_autocomplete.getPlace();
 
             if (place.geometry.viewport) {
@@ -107,14 +107,16 @@ $(function () {
             }
 
             dest_marker.setPosition(place.geometry.location);
+            console.log(place.geometry.location);
+            $("#ridedest_coords").val(place.geometry.location.lat() + "," + place.geometry.location.lng());
         });
-
-        google.maps.event.addListener(dest_map, "click", function(event)
-        {
+        //center_changed
+        google.maps.event.addListener(dest_map, "click", function (event) {
             dest_marker.setPosition(event.latLng);
+            dest_map.panTo(event.latLng);
+            $("#ridedest_coords").val(event.latLng.lat() + "," + event.latLng.lng());
         });
     });
-
 
 
 });

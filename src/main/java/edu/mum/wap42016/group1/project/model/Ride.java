@@ -18,7 +18,9 @@ public class Ride {
 
 
     Location src;
+    String srcHumanReadable;
     Location dest;
+    String destHumanReadable;
     Date dateCreated;
     RideType posttype;
     String post;
@@ -84,5 +86,19 @@ public class Ride {
         this.post = post;
     }
 
+    public String getSrcHumanReadable() {
+        return srcHumanReadable;
+    }
 
+    public void setSrcHumanReadable(String srcHumanReadable) {
+        this.srcHumanReadable = srcHumanReadable;
+    }
+
+    public String getDestHumanReadable() {
+        return destHumanReadable;
+    }
+
+    public void setDestHumanReadable(String destHumanReadable) {
+        this.destHumanReadable = destHumanReadable;
+    }
 }
