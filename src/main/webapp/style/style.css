@@ -34,3 +34,23 @@ body { padding-top: 70px; }
     table#cart tfoot td .btn{display:block;}
 
 }
+
+
+.register input, .register select{
+	margin: 0.2em 2em;
+}
+
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+.modal{
+    z-index: 20;
+}
+.modal-backdrop{
+    z-index: 10;
+}
