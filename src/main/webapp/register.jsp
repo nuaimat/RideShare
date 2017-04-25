@@ -12,7 +12,7 @@
 	<div class="container register">
 		<Form  method="post" action="registerController">
 			Full Name:<input type="Text" name="name" placeholder="Your first name" /><br> PassWord:<input
-				type="password" name="pass" placeholder="password" 
+				type="password" name="password" placeholder="password" 
 				 /> Email:<input
 				type="Text" name="email" placeholder="Your Email" /><br> City:<input
 				type="text" name='city' placeholder="Your city" /> Street:<input

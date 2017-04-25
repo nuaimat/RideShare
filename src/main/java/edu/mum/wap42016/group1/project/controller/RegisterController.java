@@ -55,6 +55,7 @@ public class RegisterController extends HttpServlet {
 	UserDAO myUsers= new UserDAO(this);
 	myUsers.addUser(name,sex,state,city,street,email,password,year,zip);
 	
+	
 	response.sendRedirect("home.jsp");
 	}
 

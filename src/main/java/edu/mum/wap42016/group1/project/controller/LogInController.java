@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.mum.wap42016.group1.project.dao.UserDAO;
+
 /**
  * Servlet implementation class LogInController
  */
@@ -35,7 +37,10 @@ public class LogInController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("You Are Logging In perfect");
+		String userName =  request.getParameter("email");
+		String password =  request.getParameter("password");
+		UserDAO user= new UserDAO(this);
+		user.validate(userName, password,request, response);
 		
 	}
 

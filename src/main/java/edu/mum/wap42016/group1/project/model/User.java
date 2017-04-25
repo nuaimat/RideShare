@@ -11,18 +11,9 @@ String password;
 int birthYear;
 int zipCode;
 
-public User(String fullName, int sex, String state, String city, String street, String email, String password,
-		int birthYear, int zipCode) {
+public User() {
 	super();
-	this.fullName = fullName;
-	this.sex = sex;
-	this.state = state;
-	this.city = city;
-	this.street = street;
-	this.email = email;
-	this.password = password;
-	this.birthYear = birthYear;
-	this.zipCode = zipCode;
+	
 }
 public String getFullName() {
 	return fullName;
