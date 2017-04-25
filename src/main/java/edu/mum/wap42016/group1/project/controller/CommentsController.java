@@ -36,12 +36,8 @@ public class CommentsController  extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CommentsDAO comments = new CommentsDAO(this);
-        List<Comment> currentComments = comments.getComments(postid,userid);
-
+        List<Comment> currentComments = comments.getComments(postid);
         req.setAttribute("comments",currentComments);
-
-        //TODO
-        //req.getRequestDispatcher("/").forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

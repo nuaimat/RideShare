@@ -6,6 +6,7 @@ package edu.mum.wap42016.group1.project.model;
 public class Location {
     private double lon;
     private double lat;
+    private String googleFormat;
 
     public Location(double lat, double lon) {
         this.lat = lat;
@@ -37,5 +38,27 @@ public class Location {
 
     public String toMysqlSpatialFormat() {
         return String.format("POINT(%.14f %.14f)", this.getLon(), this.getLat());
+    }
+
+    public static Location parseMysqlSpatialFormat(String spoint) {
+        //POINT(-91.95520782470703 41.00830459594727)
+        spoint = spoint.replace("POINT(", "");
+        spoint = spoint.replace(")", "");
+        String[] co = spoint.split(" ");
+
+        Double lon = Double.parseDouble(co[0]);
+        Double lat = Double.parseDouble(co[1]);
+
+        Location l = new Location(lat, lon);
+        return l;
+    }
+
+    @Override
+    public String toString(){
+        return this.getLon() + "," + this.getLat();
+    }
+
+    public String getGoogleFormat() {
+        return this.getLat() + "," + this.getLon();
     }
 }

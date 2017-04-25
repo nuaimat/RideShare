@@ -1,6 +1,8 @@
 package edu.mum.wap42016.group1.project.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Mo nuaimat on 4/24/17.
@@ -17,16 +19,17 @@ public class Ride {
     }
 
 
-    Location src;
-    String srcHumanReadable;
-    Location dest;
-    String destHumanReadable;
-    Date dateCreated;
-    RideType posttype;
-    String post;
-    int postid;
-    int userid;
+    private Location src;
+    private String srcHumanReadable;
+    private Location dest;
+    private String destHumanReadable;
+    private Date dateCreated;
+    private RideType posttype;
+    private String post;
+    private int postid;
+    private int userid;
     //User user;
+    private List<Comment> commentList = new ArrayList<>();
 
 
 
@@ -79,7 +82,7 @@ public class Ride {
     }
 
     public String getPost() {
-        return post;
+        return post.substring(0, 1).toUpperCase() + post.substring(1);
     }
 
     public void setPost(String post) {
@@ -100,5 +103,13 @@ public class Ride {
 
     public void setDestHumanReadable(String destHumanReadable) {
         this.destHumanReadable = destHumanReadable;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

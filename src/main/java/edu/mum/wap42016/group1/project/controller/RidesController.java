@@ -23,7 +23,7 @@ public class RidesController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        Connection connection = CacheConnection.checkOut( this ); // just to cache it
+        //Connection connection = CacheConnection.checkOut( this ); // just to cache it
         this.getServletContext().setAttribute("gmap_api_key",
                 this.getServletContext().getInitParameter("gmap_api_key"));
     }

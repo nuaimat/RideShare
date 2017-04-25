@@ -118,5 +118,19 @@ $(function () {
         });
     });
 
+    rightoolboxtop = $('.righttoolbox').offset().top;
+    $(document).scroll(function(){
+        $('.righttoolbox').css('position','');
+        rightoolboxtop = $('.righttoolbox').offset().top;
+        $('.righttoolbox').css('position','absolute');
+        setTimeout(function () {
+            if($(document).scrollTop() < 5){
+                rightoolboxtop = 0;
+            }
+            $('.righttoolbox').css('top',Math.max(rightoolboxtop,$(document).scrollTop()));
+        }, 100);
 
+    });
 });
+
+var rightoolboxtop = 0;

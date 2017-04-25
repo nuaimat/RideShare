@@ -35,8 +35,8 @@ body { padding-top: 70px; }
 
 }
 .register{	
-	Width=80%;
-	
+	Width: 80%;
+
 	margin-left: 20px;
 	margin-right: auto;
 }
@@ -95,4 +95,28 @@ body { padding-top: 70px; }
 }
 .modal-backdrop{
     z-index: 10;
+}
+
+.bld {
+    font-weight: bold;
+}
+
+.ridetitle .title-text:first-letter{
+    text-transform: capitalize;
+}
+.ridetitle{
+    background-color: #5bc0de
+}
+
+.ridedest {
+    width: 50%;float: left;margin: 0;padding: 0;box-sizing: border-box
+}
+
+.ridetitle .text-primary{
+    margin-right: 1em;
+    color: #FFFFFF;
+}
+
+.panel-footer .ride-likes, .panel-footer .ride-comments {
+    padding: 10px 15px;
 }

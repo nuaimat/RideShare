@@ -1,5 +1,7 @@
 package edu.mum.wap42016.group1.project.dao;
 
+import edu.mum.wap42016.group1.project.model.Comment;
+import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +23,8 @@ public class RidesDAO {
 
 
     public List<Ride> getRides(int from){
-        List<Ride> result = new ArrayList<>();
+        HashMap<Integer, Ride> result = new HashMap<>();
+        List<Integer> postIds = new ArrayList<>();
 
         // Turn on verbose output
         CacheConnection.setVerbose(true);
@@ -33,22 +37,29 @@ public class RidesDAO {
         String     userName   = null;
         try {
             // Test the connection
-            statement = connection.createStatement( );
+            statement = connection.createStatement();
             rs = statement.executeQuery(
-                    "select * from posts order by dateupdated desc limit 30");
+                    "select *, AsText(src) as srctxt, AsText(dest) as desttxt from posts order by dateupdated desc limit 30");
 
             while(rs.next()){
                 System.out.println("new entry ---  <br />");
+                int postid = rs.getInt("postid");
+                postIds.add(postid);
                 Ride ride = new Ride();
                 Timestamp timestamp = rs.getTimestamp("datecreated");
                 ride.setDateCreated(timestamp);
-                //ride.setDest(new Location(rs.)); // TODO check later
-                //ride.setSrc(); // TODO check later
+                ride.setSrcHumanReadable(rs.getString("srcReadable"));
+                ride.setDestHumanReadable(rs.getString("destReadable"));
                 ride.setPost(rs.getString("post"));
-                ride.setPostid(rs.getInt("postid"));
+                ride.setPostid(postid);
                 ride.setPosttype(rs.getInt("posttype") == 0? Ride.RideType.OFFERED : Ride.RideType.ASKED);
                 ride.setUserid(rs.getInt("userid"));
-                result.add(ride);
+                ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
+                ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
+                System.out.println(rs.getString("srctxt"));
+
+                
+                result.put(postid, ride);
             }
         }
         catch (SQLException e) {
@@ -65,7 +76,20 @@ public class RidesDAO {
         // Return the conection
         CacheConnection.checkIn(connection);
 
-        return result;
+        CommentsDAO commentsDAO = new CommentsDAO(context);
+        HashMap<Integer, List<Comment>> allComments = commentsDAO.getComments((ArrayList<Integer>) postIds, 33); // TODO should be user id from session
+        System.out.println("Found " + result.size() + " rides");
+        System.out.println("allComments: " + allComments);
+        List<Ride> ret = new ArrayList<>();
+        for(Integer pid:result.keySet()){
+            Ride ride = result.get(pid);
+            if(allComments.containsKey(pid)){
+                ride.setCommentList(allComments.get(pid));
+            }
+            ret.add(ride);
+        }
+
+        return ret;
     }
 
 
@@ -79,8 +103,8 @@ public class RidesDAO {
         try {
 
             String req = "INSERT INTO posts"
-                    + "(userid, post, posttype, srcReadable, destReadable, src, dest) VALUES"
-                    + "(?, ?, ?, ?, ?, GeomFromText(?),GeomFromText(?) )";
+                    + "(userid, post, posttype, srcReadable, destReadable, src, dest, datecreated) VALUES"
+                    + "(?, ?, ?, ?, ?, GeomFromText(?),GeomFromText(?), NOW() )";
 
             PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userid);
