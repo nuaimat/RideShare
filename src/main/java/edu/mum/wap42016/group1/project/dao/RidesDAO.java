@@ -33,7 +33,7 @@ public class RidesDAO {
         String     userName   = null;
         try {
             // Test the connection
-            statement = connection.createStatement(  );
+            statement = connection.createStatement( );
             rs = statement.executeQuery(
                     "select * from posts order by dateupdated desc limit 30");
 
