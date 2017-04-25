@@ -47,6 +47,6 @@ public class Database {
     }
 
     public static String generateUrlString(String host, String db) {
-        return "jdbc:mysql://" + host + "/" + db;
+        return "jdbc:mysql://" + host + "/" + db + "?autoReconnect=true&autoReconnectForPools=true";
     }
 }
