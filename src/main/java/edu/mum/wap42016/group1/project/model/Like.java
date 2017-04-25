@@ -13,12 +13,6 @@ public class Like {
     Date datecreated;
     Date dateupdated;
 
-     //long dateupdated = datecreatedDate.getTime();
-     //new Timestamp(dateupdated);
-     //
-     //long dateupdated = dateupdatedDate.getTime();
-     //    new Timestamp(dateupdated);
-
 
     public Date getDatecreated() {
         return datecreated;
@@ -34,15 +28,6 @@ public class Like {
 
     public void setDateupdated(Date dateupdated) {
         this.dateupdated = dateupdated;
-    }
-
-    public Like(int likeid, int userid, int postid, Date datecreatedDate, Date dateupdatedDate) {
-        this.likeid = likeid;
-        this.userid = userid;
-        this.postid = postid;
-        this.datecreated = datecreatedDate;
-        this.dateupdated = dateupdatedDate;
-
     }
 
     public int getLikeid() {

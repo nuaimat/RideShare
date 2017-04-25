@@ -1,7 +1,7 @@
 package edu.mum.wap42016.group1.project.dao;
 
-import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
+
 
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
@@ -37,11 +37,11 @@ public class LikesDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(req);
             preparedStatement.setInt(1, userid);
             preparedStatement.setInt(2, postid);
-           // preparedStatement.setTimestamp(4, new Timestamp(datecreated.getTime()));
-            //preparedStatement.setTimestamp(5, new Timestamp(dateupdated.getTime()));
-// execute insert SQL stetement
-             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+
+            preparedStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
             System.out.println("DedicatedConnection.doPost(  ) SQLException: " +
                     e.getMessage(  ) );
         } finally {
