@@ -35,7 +35,7 @@ body { padding-top: 70px; }
 
 }
 .register{	
-	Width=80%;
+	Width: 80%;
 	background-color: #b6d3ef;
 	margin: auto;
 }
@@ -76,4 +76,19 @@ body { padding-top: 70px; }
 }
 .modal-backdrop{
     z-index: 10;
+}
+
+.bld {
+    font-weight: bold;
+}
+
+.ridetitle:first-letter{
+    text-transform: capitalize
+}
+.ridetitle{
+    background-color: #5bc0de
+}
+
+.ridedest {
+    width: 50%;float: left;margin: 0;padding: 0;box-sizing: border-box
 }

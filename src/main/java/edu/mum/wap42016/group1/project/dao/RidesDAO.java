@@ -1,5 +1,6 @@
 package edu.mum.wap42016.group1.project.dao;
 
+import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
@@ -33,21 +34,26 @@ public class RidesDAO {
         String     userName   = null;
         try {
             // Test the connection
-            statement = connection.createStatement(  );
+            statement = connection.createStatement();
             rs = statement.executeQuery(
-                    "select * from posts order by dateupdated desc limit 30");
+                    "select *, AsText(src) as srctxt, AsText(dest) as desttxt from posts order by dateupdated desc limit 30");
 
             while(rs.next()){
                 System.out.println("new entry ---  <br />");
                 Ride ride = new Ride();
                 Timestamp timestamp = rs.getTimestamp("datecreated");
                 ride.setDateCreated(timestamp);
-                //ride.setDest(new Location(rs.)); // TODO check later
-                //ride.setSrc(); // TODO check later
+                ride.setSrcHumanReadable(rs.getString("srcReadable"));
+                ride.setDestHumanReadable(rs.getString("destReadable"));
                 ride.setPost(rs.getString("post"));
                 ride.setPostid(rs.getInt("postid"));
                 ride.setPosttype(rs.getInt("posttype") == 0? Ride.RideType.OFFERED : Ride.RideType.ASKED);
                 ride.setUserid(rs.getInt("userid"));
+                ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
+                ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
+                System.out.println(rs.getString("srctxt"));
+                // TODO set loc
+                // ride.setDest();
                 result.add(ride);
             }
         }
@@ -79,8 +85,8 @@ public class RidesDAO {
         try {
 
             String req = "INSERT INTO posts"
-                    + "(userid, post, posttype, srcReadable, destReadable, src, dest) VALUES"
-                    + "(?, ?, ?, ?, ?, GeomFromText(?),GeomFromText(?) )";
+                    + "(userid, post, posttype, srcReadable, destReadable, src, dest, datecreated) VALUES"
+                    + "(?, ?, ?, ?, ?, GeomFromText(?),GeomFromText(?), NOW() )";
 
             PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userid);

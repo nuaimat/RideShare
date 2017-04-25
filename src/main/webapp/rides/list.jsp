@@ -1,12 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../templates/header_template.jsp"/>
 <div class="container-fluid">
-    <h2>Hello World!</h2>
     <div class="row">
-        <div class="col-sm-4">
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newRideModal">
+        <div class="col-sm-3">
+            <div class="righttoolbox">
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#newRideModal">
                 Offer/Request Ride
-            </button>
+                </button>
+            </div>
+
 
 
             <!-- Modal -->
@@ -32,13 +34,13 @@
                                 <div class="form-group">
                                     <label for="ridesrc">Source:</label>
                                     <input type="text" class="form-control" id="ridesrc" name="ridesrc">
-                                    <input type="hidden" name="ridesrc_coords" id="ridesrc_coords" >
+                                    <input type="hidden" name="ridesrc_coords" id="ridesrc_coords">
                                     <div id="src_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="ridedest">Destination:</label>
                                     <input type="text" class="form-control" id="ridedest" name="ridedest">
-                                    <input type="hidden" name="ridedest_coords" id="ridedest_coords" >
+                                    <input type="hidden" name="ridedest_coords" id="ridedest_coords">
                                     <div id="dest_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
                                 <div class="form-group">
@@ -49,20 +51,25 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="submit_new_ride">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="submit_new_ride">
+                                Submit
+                            </button>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-9">
             <c:forEach items="${rides}" var="ride">
-                <div>${ride.dateCreated}</div>
+                <c:set var="ride_obj" value="${ride}" scope="request" />
+                <jsp:include page="/rides/ride_panel.jsp" />
             </c:forEach>
         </div>
     </div>
 
 </div>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async defer></script>
+<script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async
+        defer></script>
 <jsp:include page="../templates/footer_template.jsp"/>
