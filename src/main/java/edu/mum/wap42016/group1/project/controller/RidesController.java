@@ -30,31 +30,11 @@ public class RidesController extends HttpServlet {
         super.destroy();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.getWriter().println(req.getParameter("ridedesc"));
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        /* res.setContentType("text/html");
-        PrintWriter out = res.getWriter(  );
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Cached Connection Servlet</title>");
-        out.println("</head>");
-        out.println("<body>");
-
-        RidesDAO ridesDAO = new RidesDAO(this);
-        List<Ride> currentRides = ridesDAO.getTrips(0);
-
-        for(Ride r:currentRides){
-            out.println("Ride( " + r.getPostid() +" ) created on " + r.getDateCreated() + " by user id " +  r.getUserid() + "<br />");
-        }
-
-
-        out.println("Hello  !<p>");
-        out.println("You're using a cached connection!<p>");
-        out.println("</body>");
-        out.println("</html>"); */
 
         RidesDAO ridesDAO = new RidesDAO(this);
         List<Ride> currentRides = ridesDAO.getTrips(0);
