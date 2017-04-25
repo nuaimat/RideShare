@@ -2,6 +2,7 @@ package edu.mum.wap42016.group1.project.dao;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mum.wap42016.group1.project.dao.CommentsDAO;
@@ -22,15 +23,15 @@ public class JSONCommentsConvertor extends HttpServlet {
     private int userid=2;
     private int postid=3;
     private String arrayToJson;
+    ObjectMapper objectMapper = new ObjectMapper();
+    List<Comment> commentList= new ArrayList<>();
 
 
-    public String createCommentJSON(){
+    public String createCommentsJSON(){
 
 
         CommentsDAO commentsDao= new CommentsDAO(this);
-        List<Comment> commentList= new ArrayList<>();
         commentList= commentsDao.getComments(userid,postid);
-        ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
             String arrayToJson = null;
@@ -39,17 +40,22 @@ public class JSONCommentsConvertor extends HttpServlet {
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            //TO DO just for output
-            System.out.println(arrayToJson);
-
-
-
 
 
 
         return arrayToJson;
     }
 
+    public   List<Comment>  creatCommentsObject(){
+
+
+        TypeReference<List<Comment>> mapType = new TypeReference<List<Comment>>() {};
+       // List<Comment> jsonToComments = objectMapper.readValue(arrayToJson, mapType);
+        System.out.println("\n2. Convert JSON to List of person objects :");
+
+       // return jsonToComments;
+        return null;
+    }
 
 
 
