@@ -2,6 +2,7 @@ package edu.mum.wap42016.group1.project.controller;
 
 import edu.mum.wap42016.group1.project.dao.CommentsDAO;
 import edu.mum.wap42016.group1.project.model.Comment;
+import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class CommentsController  extends HttpServlet{
 
     @Override
     public void init() throws ServletException {
-        super.init();
+        Connection connection = CacheConnection.checkOut( this ); // just to cache it
     }
 
     @Override

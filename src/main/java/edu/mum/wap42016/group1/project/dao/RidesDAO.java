@@ -52,8 +52,7 @@ public class RidesDAO {
                 ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
                 ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
                 System.out.println(rs.getString("srctxt"));
-                // TODO set loc
-                // ride.setDest();
+                
                 result.add(ride);
             }
         }

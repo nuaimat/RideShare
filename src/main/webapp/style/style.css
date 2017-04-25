@@ -36,15 +36,14 @@ body { padding-top: 70px; }
 }
 .register{	
 	Width: 80%;
-	background-color: #b6d3ef;
-	margin: auto;
+
+	margin-left: 20px;
+	margin-right: auto;
 }
 .register input, .register select{
-	margin: 0.2em 2em;
-	
+	margin: 0.2em 2em;	
 }
-.register input, .state {
-	
+.register input, .state {	
 	border-radius: 8px;
 	display: block;
 	border-width: 2px;
@@ -56,13 +55,34 @@ body { padding-top: 70px; }
 	display: inline;
 	width: 2em;
 	height: 1em;
+	}
+.input{
+	margin-left:auto;
+	margin-right:auto;
+	border: 2px thin black;
+	width: 50em;
+	height: 50em;
+	background-color: #1fe0e0;
 }
-.login input{
+.login input{	
+	background-color: #DFE2DB;
 	border-radius: 8px;
 	display: block;
 	border-width: 2px;
 	width: 20em;
 	height: 2em;
+	}
+.logbtn{
+	margin: 1.2em;
+	margin-left: 0.2em;
+	}
+.login{	
+	width: 50%;
+	height: 50%;
+	padding:5ex;
+	margin: auto;
+	background-color: #3ffce9; 
+	
 }
 .pac-container {
     background-color: #FFF;
