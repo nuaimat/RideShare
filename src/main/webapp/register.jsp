@@ -27,6 +27,7 @@
 				<option>California</option>
 				<option>Florida</option>
 			</select>
+			
 			<fieldset>
 				<legend>Sex</legend>
 				Male <input type="radio" name="sex" id="sex" /> Female <input

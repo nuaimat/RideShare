@@ -14,8 +14,10 @@
 			Email:<input type="Text" name="username" placeholder="email" /><br>
 			PassWord:<input type="password" name="password"
 				placeholder="password" />
-			<input type="submit" value="LogIn">
+			<input type="submit" value="LogIn" class="logbtn">
+			<a href="register.jsp"> SignUp </a>
 		</Form>
+		
 	</div>
 </body>
 </html>
