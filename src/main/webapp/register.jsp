@@ -10,16 +10,15 @@
 </head>
 <body>
 	<div class="container register">
-		<Form>
-			Full Name:<input type="Text" name="name"
-				placeholder="Your first name" /><br> PassWord:<input
-				type="password" name="pass" placeholder="password"
-				pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" /> Email:<input
+		<Form  method="post" action="registerController">
+			Full Name:<input type="Text" name="name" placeholder="Your first name" /><br> PassWord:<input
+				type="password" name="pass" placeholder="password" 
+				 /> Email:<input
 				type="Text" name="email" placeholder="Your Email" /><br> City:<input
 				type="text" name='city' placeholder="Your city" /> Street:<input
 				type="text" name='street' placeholder="Your Street" /> Year of
-			Birth:<input type="text" name='year' placeholder="YYYY" />Zip: <input
-				type="text" name='zip' placeholder="ZIP" /> State:<select
+			Birth:<input type="text" name='year' placeholder="YYYY" pattern="^\d{4}$" />Zip: <input
+				type="text" name='zip' placeholder="ZIP-XXXXX" pattern="^\d{5}$"/> State:<select
 				class="state" name="state">
 				<option>Iowa</option>
 				<option>Colorado</option>
@@ -33,9 +32,7 @@
 				Male <input type="radio" name="sex" id="sex" /> Female <input
 					type="radio" id="sex" name="sex" />
 			</fieldset>
-			<input type='submit' metho="post" action="RegisterController"
-				Value="Register" />
-
-		</Form>
+			<input type='submit' Value="Register" />
+			</Form>
 	</div>
 	<jsp:include page="templates/footer_template.jsp" />

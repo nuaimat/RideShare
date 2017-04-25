@@ -2,6 +2,7 @@ package edu.mum.wap42016.group1.project.model;
 
 public class User {
 String fullName;
+int sex;
 String state;
 String city;
 String street;
@@ -9,10 +10,12 @@ String email;
 String password;
 int birthYear;
 int zipCode;
-public User(String fullName, String state, String city, String street, String email, String password,
+
+public User(String fullName, int sex, String state, String city, String street, String email, String password,
 		int birthYear, int zipCode) {
 	super();
-	this.fullName = fullName;	
+	this.fullName = fullName;
+	this.sex = sex;
 	this.state = state;
 	this.city = city;
 	this.street = street;
