@@ -30,12 +30,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ridesrc">Src:</label>
+                                    <label for="ridesrc">Source:</label>
                                     <input type="text" class="form-control" id="ridesrc" name="ridesrc">
                                     <div id="src_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="ridedest">Src:</label>
+                                    <label for="ridedest">Destination:</label>
                                     <input type="text" class="form-control" id="ridedest" name="ridedest">
                                     <div id="dest_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
@@ -62,5 +62,5 @@
     </div>
 
 </div>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAWPR8ffZ_ojLIHXfLm96J6Se_wS1WkHDs&libraries=places&sensor=false"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false"></script>
 <jsp:include page="../templates/footer_template.jsp"/>

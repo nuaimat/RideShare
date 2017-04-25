@@ -23,6 +23,8 @@ public class RidesController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         Connection connection = CacheConnection.checkOut( this ); // just to cache it
+        this.getServletContext().setAttribute("gmap_api_key",
+                this.getServletContext().getInitParameter("gmap_api_key"));
     }
 
     @Override
@@ -35,7 +37,6 @@ public class RidesController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
         RidesDAO ridesDAO = new RidesDAO(this);
         List<Ride> currentRides = ridesDAO.getTrips(0);
 

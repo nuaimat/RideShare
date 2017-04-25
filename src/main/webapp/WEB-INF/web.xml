@@ -26,6 +26,10 @@
     <param-name>db_conn_string</param-name>
     <param-value>mysql://b98acd66dd48b0:632d4fc7@us-cdbr-iron-east-03.cleardb.net/heroku_8817d68b4a21fb3?reconnect=true</param-value>
   </context-param>
+  <context-param>
+    <param-name>gmap_api_key</param-name>
+    <param-value>AIzaSyAWPR8ffZ_ojLIHXfLm96J6Se_wS1WkHDs</param-value>
+  </context-param>
 
   <!-- RidesController -->
   <servlet>
