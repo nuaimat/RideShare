@@ -9,6 +9,7 @@ import edu.mum.wap42016.group1.project.dao.CommentsDAO;
 import edu.mum.wap42016.group1.project.model.Comment;
 
 import javax.servlet.http.HttpServlet;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class JSONCommentsConvertor extends HttpServlet {
     private String arrayToJson;
     ObjectMapper objectMapper = new ObjectMapper();
     List<Comment> commentList= new ArrayList<>();
+    private List<Comment> jsonToComments;
 
 
     public String createCommentsJSON(){
@@ -45,16 +47,21 @@ public class JSONCommentsConvertor extends HttpServlet {
         return arrayToJson;
     }
 
-    public   List<Comment>  creatCommentsObject(){
+    // Future use if needed to change JSON back to Objects
+
+    /*public   List<Comment>  createCommentsObject(){
 
 
         TypeReference<List<Comment>> mapType = new TypeReference<List<Comment>>() {};
-       // List<Comment> jsonToComments = objectMapper.readValue(arrayToJson, mapType);
-        System.out.println("\n2. Convert JSON to List of person objects :");
+        try {
+            List<Comment> jsonToComments = objectMapper.readValue(arrayToJson, mapType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
        // return jsonToComments;
-        return null;
-    }
+        return jsonToComments;
+    }*/
 
 
 
