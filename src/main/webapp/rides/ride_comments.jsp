@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: nuaimat
@@ -5,4 +6,8 @@
   Time: 4:35 PM
   To change this template use File | Settings | File Templates.
 --%>
-comments
+<ul>
+<c:forEach items="${ride_obj.commentList}" var="comment">
+     <li>${comment.comment}</li>
+</c:forEach>
+</ul>

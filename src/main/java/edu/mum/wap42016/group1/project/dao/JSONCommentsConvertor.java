@@ -29,9 +29,8 @@ public class JSONCommentsConvertor extends HttpServlet {
 
     public String createCommentsJSON(){
 
-
         CommentsDAO commentsDao= new CommentsDAO(this);
-        commentList= commentsDao.getComments(userid,postid);
+        commentList= commentsDao.getComments(postid);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
             String arrayToJson = null;

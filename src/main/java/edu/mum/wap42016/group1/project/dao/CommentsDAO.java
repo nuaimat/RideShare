@@ -2,10 +2,13 @@ package edu.mum.wap42016.group1.project.dao;
 
 import edu.mum.wap42016.group1.project.model.Comment;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ public class CommentsDAO {
         this.context = context;
 
     }
-    public void  creatCommment(int userid,int postid){
+    public void creatCommment(int userid,int postid, String comment){
 
         // Turn on verbose output
         CacheConnection.setVerbose(true);
@@ -34,12 +37,13 @@ public class CommentsDAO {
         try {
 
             String req = "INSERT INTO comments"
-                    + "( userid, postid) VALUES"
-                    + "(?,?)";
+                    + "(userid, postid, comment) VALUES"
+                    + "(?,?,?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(req);
             preparedStatement.setInt(1, userid);
             preparedStatement.setInt(2, postid);
+            preparedStatement.setString(3, comment);
 
             preparedStatement.executeUpdate();
 
@@ -65,7 +69,7 @@ public class CommentsDAO {
 
 
 
-    public List<Comment> getComments(int postId,int userId){
+    public List<Comment> getComments(int postId){
         List<Comment> result = new ArrayList<>();
 
         // Turn on verbose output
@@ -74,14 +78,16 @@ public class CommentsDAO {
         // Get a cached connection
         Connection connection = CacheConnection.checkOut( context );
 
-        Statement statement  = null;
+        PreparedStatement preparedStatement  = null;
         ResultSet rs  = null;
         String     userName   = null;
         try {
             // Test the connection
-            statement = connection.createStatement(  );
-            rs = statement.executeQuery(
-                    "select * from comments where postid=postId and userid=userId order by dateupdated desc limit 20");
+            String query = "select * from comments where postid=? order by dateupdated desc";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, postId);
+
+            rs = preparedStatement.executeQuery();
 
             while(rs.next()){
                 Comment comment = new Comment();
@@ -97,14 +103,14 @@ public class CommentsDAO {
             }
         }
         catch (SQLException e) {
-            System.out.println("DedicatedConnection.doGet(  ) SQLException: " +
+            System.out.println("CommentsDAO.getComments(  ) SQLException: " +
                     e.getMessage(  ) );
         }
         finally {
             if (rs != null)
                 try { rs.close(  ); } catch (SQLException ignore) { }
-            if (statement != null)
-                try { statement.close(  ); } catch (SQLException ignore) { }
+            if (preparedStatement != null)
+                try { preparedStatement.close(  ); } catch (SQLException ignore) { }
         }
 
         // Return the conection
@@ -113,6 +119,61 @@ public class CommentsDAO {
         return result;
     }
 
+
+    public HashMap<Integer, List<Comment>> getComments(ArrayList<Integer> postIds,int userId){
+        HashMap<Integer, List<Comment>> result = new HashMap<>();
+
+        // Turn on verbose output
+        CacheConnection.setVerbose(true);
+
+        // Get a cached connection
+        Connection connection = CacheConnection.checkOut( context );
+
+        PreparedStatement preparedStatement = null;
+        ResultSet rs  = null;
+        try {
+            String query = "select * from comments where postid in (?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, StringUtils.join(postIds, ","));
+            System.out.println("CommentsDAO.getComments " + preparedStatement);
+            rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                int postId = rs.getInt("postid");
+
+                Comment comment = new Comment();
+                comment.setUserid(rs.getInt("userid"));
+                comment.setPostid(postId);
+                comment.setComment(rs.getString("comment"));
+                Timestamp timestamp = rs.getTimestamp("datecreated");
+                comment.setDatecreated(timestamp);
+                Timestamp timestamp2 = rs.getTimestamp("dateupdated");
+                comment.setDatecreated(timestamp2);
+
+                System.out.println("Adding comment " + comment );
+                if(!result.containsKey(postId)){
+                    result.put(postId, new ArrayList<Comment>());
+                }
+
+                ((ArrayList<Comment>) result.get(postId)).add(comment);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("CommentsDAO.getComments() SQLException: " +
+                    e.getMessage(  ) );
+        }
+        finally {
+            if (rs != null)
+                try { rs.close(  ); } catch (SQLException ignore) { }
+            if (preparedStatement != null)
+                try { preparedStatement.close(  ); } catch (SQLException ignore) { }
+        }
+
+        // Return the conection
+        CacheConnection.checkIn(connection);
+
+        return result;
+    }
 
     }
 
