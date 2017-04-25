@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.mum.wap42016.group1.project.model.User;
+
 /**
  * Servlet implementation class RegisterController
  */
@@ -35,6 +37,16 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	String name= request.getParameter("name");
+	String password= request.getParameter("password");
+	String state=request.getParameter("state");
+	String email=request.getParameter("email");
+	String sex=request.getParameter("sex");
+	String city=request.getParameter("city");
+	int zip=Integer.parseInt(request.getParameter("ZIP"));
+	int year=Integer.parseInt(request.getParameter("year"));
+	String street=request.getParameter("street");
+	User user=new User(name,state,city,street,email,password,year,zip);
 	
 	}
 

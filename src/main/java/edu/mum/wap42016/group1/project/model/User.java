@@ -1,8 +1,7 @@
 package edu.mum.wap42016.group1.project.model;
 
 public class User {
-String firstName;
-String lastName;
+String fullName;
 String state;
 String city;
 String street;
@@ -10,11 +9,10 @@ String email;
 String password;
 int birthYear;
 int zipCode;
-public User(String firstName, String lastName, String state, String city, String street, String email, String password,
+public User(String fullName, String state, String city, String street, String email, String password,
 		int birthYear, int zipCode) {
 	super();
-	this.firstName = firstName;
-	this.lastName = lastName;
+	this.fullName = fullName;	
 	this.state = state;
 	this.city = city;
 	this.street = street;
@@ -23,17 +21,11 @@ public User(String firstName, String lastName, String state, String city, String
 	this.birthYear = birthYear;
 	this.zipCode = zipCode;
 }
-public String getFirstName() {
-	return firstName;
+public String getFullName() {
+	return fullName;
 }
-public void setFirstName(String firstName) {
-	this.firstName = firstName;
-}
-public String getLastName() {
-	return lastName;
-}
-public void setLastName(String lastName) {
-	this.lastName = lastName;
+public void setFullName(String fullName) {
+	this.fullName = fullName;
 }
 public String getState() {
 	return state;

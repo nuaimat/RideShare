@@ -35,6 +35,12 @@ body { padding-top: 70px; }
 
 }
 
+
+.register input, .register select{
+	margin: 0.2em 2em;
+}
+
+
 .pac-container {
     background-color: #FFF;
     z-index: 20;
