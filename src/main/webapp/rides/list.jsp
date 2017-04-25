@@ -32,11 +32,13 @@
                                 <div class="form-group">
                                     <label for="ridesrc">Source:</label>
                                     <input type="text" class="form-control" id="ridesrc" name="ridesrc">
+                                    <input type="hidden" name="ridesrc_coords" id="ridesrc_coords" >
                                     <div id="src_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="ridedest">Destination:</label>
                                     <input type="text" class="form-control" id="ridedest" name="ridedest">
+                                    <input type="hidden" name="ridedest_coords" id="ridedest_coords" >
                                     <div id="dest_map_canvas" style="width: 100%; height:100px"></div>
                                 </div>
                                 <div class="form-group">
@@ -62,5 +64,5 @@
     </div>
 
 </div>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async defer></script>
 <jsp:include page="../templates/footer_template.jsp"/>

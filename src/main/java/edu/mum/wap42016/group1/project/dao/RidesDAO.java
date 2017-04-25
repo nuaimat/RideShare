@@ -19,7 +19,7 @@ public class RidesDAO {
     }
 
 
-    public List<Ride> getTrips(int from){
+    public List<Ride> getRides(int from){
         List<Ride> result = new ArrayList<>();
 
         // Turn on verbose output
@@ -33,7 +33,7 @@ public class RidesDAO {
         String     userName   = null;
         try {
             // Test the connection
-            statement = connection.createStatement(  );
+            statement = connection.createStatement( );
             rs = statement.executeQuery(
                     "select * from posts order by dateupdated desc limit 30");
 
@@ -66,5 +66,55 @@ public class RidesDAO {
         CacheConnection.checkIn(connection);
 
         return result;
+    }
+
+
+    public boolean save(Ride r, int userid){
+        // Get a cached connection
+        Connection connection = CacheConnection.checkOut(context);
+        PreparedStatement statement  = null;
+        ResultSet rs  = null;
+        int last_inserted_id = -1;
+
+        try {
+
+            String req = "INSERT INTO posts"
+                    + "(userid, post, posttype, srcReadable, destReadable, src, dest) VALUES"
+                    + "(?, ?, ?, ?, ?, GeomFromText(?),GeomFromText(?) )";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, userid);
+            preparedStatement.setString(2, r.getPost());
+            preparedStatement.setInt(3, r.getPosttype().typeNum);
+            preparedStatement.setString(4, r.getSrcHumanReadable());
+            preparedStatement.setString(5, r.getDestHumanReadable());
+            preparedStatement.setString(6, r.getSrc().toMysqlSpatialFormat() );
+            preparedStatement.setString(7, r.getDest().toMysqlSpatialFormat() );
+            System.out.println(preparedStatement.toString());
+
+            preparedStatement.executeUpdate();
+            rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                last_inserted_id = rs.getInt(1);
+                System.out.println("inserted with id " + last_inserted_id);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("RidesDAO.save() SQLException: " +
+                    e.getMessage(  ) );
+        } finally {
+
+            if (rs != null)
+                try { rs.close(  ); } catch (SQLException ignore) { }
+            if (statement != null)
+                try { statement.close(  ); } catch (SQLException ignore) { }
+        }
+
+
+        // Return the conection
+        CacheConnection.checkIn(connection);
+
+        return last_inserted_id != -1;
     }
 }

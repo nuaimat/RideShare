@@ -1,6 +1,7 @@
 package edu.mum.wap42016.group1.project.controller;
 
 import edu.mum.wap42016.group1.project.dao.RidesDAO;
+import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
@@ -33,12 +34,26 @@ public class RidesController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Ride r = new Ride();
+
+        int ridetype = Integer.parseInt(req.getParameter("ridetype"));
+        r.setPosttype(ridetype == 0 ? Ride.RideType.OFFERED : Ride.RideType.ASKED);
+        r.setSrc(Location.parse(req.getParameter("ridesrc_coords")));
+        r.setSrcHumanReadable(req.getParameter("ridesrc"));
+        r.setDest(Location.parse(req.getParameter("ridedest_coords")));
+        r.setDestHumanReadable(req.getParameter("ridedest"));
+        r.setPost(req.getParameter("ridedesc"));
+
+        RidesDAO ridesDAO = new RidesDAO(this);
+
+        boolean saved = ridesDAO.save(r, 1);
         res.getWriter().println(req.getParameter("ridedesc"));
+
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         RidesDAO ridesDAO = new RidesDAO(this);
-        List<Ride> currentRides = ridesDAO.getTrips(0);
+        List<Ride> currentRides = ridesDAO.getRides(0);
 
         req.setAttribute("rides", currentRides);
         req.getRequestDispatcher("/rides/list.jsp").forward(req, res);

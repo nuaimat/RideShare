@@ -19,10 +19,10 @@ public class CacheConnection {
         String password = servlet.getServletContext().getInitParameter("db_password");
         String db = servlet.getServletContext().getInitParameter("db_name");
         String host = servlet.getServletContext().getInitParameter("db_host");
-        return checkOut(username, password, db, host);
+        return checkOut(username, password, db, host, servlet);
     }
 
-    synchronized public static Connection checkOut(String username, String password, String db, String host) {
+    synchronized public static Connection checkOut(String username, String password, String db, String host, HttpServlet servlet) {
         boolean          found  = false;
         CachedConnection cached = null;
 
