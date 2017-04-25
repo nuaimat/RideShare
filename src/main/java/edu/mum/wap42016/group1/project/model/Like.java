@@ -13,12 +13,6 @@ public class Like {
     Date datecreated;
     Date dateupdated;
 
-     //long dateupdated = datecreatedDate.getTime();
-     //new Timestamp(dateupdated);
-     //
-     //long dateupdated = dateupdatedDate.getTime();
-     //    new Timestamp(dateupdated);
-
 
     public Date getDatecreated() {
         return datecreated;
