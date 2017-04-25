@@ -30,15 +30,6 @@ public class Like {
         this.dateupdated = dateupdated;
     }
 
-    public Like(int likeid, int userid, int postid, Date datecreatedDate, Date dateupdatedDate) {
-        this.likeid = likeid;
-        this.userid = userid;
-        this.postid = postid;
-        this.datecreated = datecreatedDate;
-        this.dateupdated = dateupdatedDate;
-
-    }
-
     public int getLikeid() {
         return likeid;
     }
