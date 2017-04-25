@@ -89,7 +89,7 @@ $(function () {
         });
 
 
-        /* var dest_input = document.getElementById("ridedest");
+        var dest_input = document.getElementById("ridedest");
         var dest_autocomplete = new google.maps.places.Autocomplete(dest_input);
         dest_autocomplete.bindTo("bounds", dest_map);
 
@@ -112,7 +112,7 @@ $(function () {
         google.maps.event.addListener(dest_map, "click", function(event)
         {
             dest_marker.setPosition(event.latLng);
-        }); */
+        });
     });
 
 

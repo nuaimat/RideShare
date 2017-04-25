@@ -1,7 +1,10 @@
 package edu.mum.wap42016.group1.project.controller;
 
-import edu.mum.wap42016.group1.project.dao.RidesDAO;
-import edu.mum.wap42016.group1.project.model.Ride;
+/**
+ * Created by zaid on 4/24/2017.
+ */
+
+import edu.mum.wap42016.group1.project.dao.LikesDAO;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.ServletException;
@@ -12,19 +15,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Mo nuaimat on 4/24/17.
- */
-@WebServlet(name = "RidesController")
-public class RidesController extends HttpServlet {
+
+
+@WebServlet(name = "LikesController")
+public class LikesController extends HttpServlet {
+
+
+    //TODO change to actual user id and postid
+   private int userid = 1;
+   private int postid = 1;
+
 
     @Override
     public void init() throws ServletException {
         Connection connection = CacheConnection.checkOut( this ); // just to cache it
-        this.getServletContext().setAttribute("gmap_api_key",
-                this.getServletContext().getInitParameter("gmap_api_key"));
     }
 
     @Override
@@ -32,15 +40,15 @@ public class RidesController extends HttpServlet {
         super.destroy();
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().println(req.getParameter("ridedesc"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+        LikesDAO likes= new LikesDAO(this);
+        likes.addLikes(userid, postid);
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        RidesDAO ridesDAO = new RidesDAO(this);
-        List<Ride> currentRides = ridesDAO.getTrips(0);
 
-        req.setAttribute("rides", currentRides);
-        req.getRequestDispatcher("/rides/list.jsp").forward(req, res);
+
     }
 }

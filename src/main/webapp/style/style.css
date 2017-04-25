@@ -19,7 +19,6 @@ body { padding-top: 70px; }
     .actions .btn-danger{
         float:right;
     }
-    
 
     table#cart thead { display: none; }
     table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
@@ -35,11 +34,16 @@ body { padding-top: 70px; }
     table#cart tfoot td .btn{display:block;}
 
 }
+<<<<<<< HEAD
 .register{	
 	Width=80%;
 	background-color: #b6d3ef;
 	margin: auto;
 }
+=======
+
+
+>>>>>>> 9644cf13a155cb2f072016bb9e8ee49100f13ced
 .register input, .register select{
 	margin: 0.2em 2em;
 	
@@ -50,7 +54,25 @@ body { padding-top: 70px; }
 	width: 20em;
 	height: 2em;
 }
+<<<<<<< HEAD
 #sex{display: inline;
 width: 2em;
 height: 1em;}
 
+=======
+
+
+.pac-container {
+    background-color: #FFF;
+    z-index: 20;
+    position: fixed;
+    display: inline-block;
+    float: left;
+}
+.modal{
+    z-index: 20;
+}
+.modal-backdrop{
+    z-index: 10;
+}
+>>>>>>> 9644cf13a155cb2f072016bb9e8ee49100f13ced
