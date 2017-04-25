@@ -124,7 +124,6 @@ $(function () {
         rightoolboxtop = $('.righttoolbox').offset().top;
         $('.righttoolbox').css('position','absolute');
         setTimeout(function () {
-            console.log("st: " + $(document).scrollTop() + " vs rt:" + rightoolboxtop);
             if($(document).scrollTop() < 5){
                 rightoolboxtop = 0;
             }

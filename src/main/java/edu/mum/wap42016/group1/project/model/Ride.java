@@ -79,7 +79,7 @@ public class Ride {
     }
 
     public String getPost() {
-        return post;
+        return post.substring(0, 1).toUpperCase() + post.substring(1);
     }
 
     public void setPost(String post) {
