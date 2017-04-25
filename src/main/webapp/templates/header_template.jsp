@@ -8,16 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 200) %></c:set>
 <html>
 <head>
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<c:url value="/style/style.css" />">
+    <link rel="stylesheet" href="<c:url value="/style/style.css" />?${rand}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="<c:url value="/js/main.js" />" ></script>
+    <script src="<c:url value="/js/main.js" />?${rand}" ></script>
+
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
