@@ -94,14 +94,6 @@ public class UserDAO {
                 myuser.setStreet(rs.getString("street"));
 
                 myuser.setUserid(rs.getInt("userid"));
-
-                //myuser.setPassword(rs.getString("password"));
-<<<<<<< HEAD
-                myuser.setUserid(rs.getInt("userid"));
-=======
-				myuser.setUserid(rs.getInt("userid"));
-
->>>>>>> eee7b0d32add3f89e98aa630b41c81cf4b463b14
             }
 
             if (isUser) {
