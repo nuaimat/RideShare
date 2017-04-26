@@ -22,6 +22,9 @@ public class CommentsController  extends HttpServlet{
     //TODO change to actual user id and postid from req
     private int userid = 1;
     private int postid = 1;
+    private String commenttext= " ";
+
+
 
     @Override
     public void destroy() {
@@ -41,8 +44,14 @@ public class CommentsController  extends HttpServlet{
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 
+
+        CommentsDAO comments= new CommentsDAO(this);
+        comments.creatCommment(userid,postid,commenttext);
+    }
+//TO DO edit
+       /* int userid= req.getParameter("");
+         int postid= req.getParameter("");
+         String commenttext=req.getParameter("")*/
 
 }
