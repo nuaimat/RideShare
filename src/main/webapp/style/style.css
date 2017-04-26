@@ -62,8 +62,7 @@ body { padding-top: 70px; }
 	border: 2px thin black;
 	width: 50em;
 	height: 50em;
-	background-color: #1fe0e0;
-}
+	}
 .login input{	
 	background-color: #DFE2DB;
 	border-radius: 8px;

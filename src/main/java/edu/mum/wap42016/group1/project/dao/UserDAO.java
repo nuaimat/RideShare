@@ -5,66 +5,138 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
+import org.apache.tomcat.jni.Address;
+
+import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 public class UserDAO {
 	HttpServlet context;
 
-    public UserDAO(HttpServlet context) {
-        this.context = context;
-    }
-	public void addUser(String fullname, int gender,String state, String city, String street, String email, String password,
-			int birthyear, int zipcode){
+	public UserDAO(HttpServlet context) {
+		this.context = context;
+	}
+
+	public void addUser(String fullname, int gender, String state, String city, String street, String email,
+			String password, int birthyear, int zipcode) {
+
+		// Turn on verbose output
+		CacheConnection.setVerbose(true);
+		// Get a cached connection
+		Connection connection = CacheConnection.checkOut(context);
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String userName = null;
+		try {
+
+			String req = "INSERT INTO users"
+					+ "( fullname, gender, state, city, street, zipcode,birthyear,email, password) VALUES"
+					+ "(?,?,?,?,?,?,?,?,?)";
+
+			PreparedStatement preparedStatement = connection.prepareStatement(req);
+			preparedStatement.setString(1, fullname);
+			preparedStatement.setInt(2, gender);
+			preparedStatement.setString(3, state);
+			preparedStatement.setString(4, city);
+			preparedStatement.setString(5, street);
+			preparedStatement.setInt(6, zipcode);
+			preparedStatement.setInt(7, birthyear);
+			preparedStatement.setString(8, email);
+			preparedStatement.setString(9, password);
+			System.out.println(preparedStatement);
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("UserDAO.addUser(  ) SQLException: " + e.getMessage());
+		} finally {
+
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException ignore) {
+				}
+			if (statement != null)
+				try {
+					statement.close();
+				} catch (SQLException ignore) {
+				}
+		}
+		// Return the conection
+		CacheConnection.checkIn(connection);
+
+	}
+
+	public boolean validate(String userName, String password , HttpServletRequest request, HttpServletResponse response) {
 		
-        // Turn on verbose output
-        CacheConnection.setVerbose(true);
-
-
+		CacheConnection.setVerbose(true);		
         // Get a cached connection
-        Connection connection = CacheConnection.checkOut(context);
-        PreparedStatement statement  = null;
+        Connection connection = CacheConnection.checkOut( context );
+        User myuser = null;
+        boolean isUser= false;
+        Statement statement  = null;
         ResultSet rs  = null;
-        String     userName   = null;
-
         try {
+        	
+        	String req="Select * from users where email=? and password=?" ;
+        	PreparedStatement preparedStatement = connection.prepareStatement(req);
+        	preparedStatement.setString(1, userName);
+        	preparedStatement.setString(2, password);
+        	
+        	 preparedStatement.executeUpdate();
 
-            String req = "INSERT INTO users"
-                    + "( fullname, gender, state, city, street, zipcode,birthyear,email, password) VALUES"
-                    + "(?,?,?,?,?,?,?,?,?)";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(req);
-            preparedStatement.setString(1, fullname);
-            preparedStatement.setInt(2, gender);
-            preparedStatement.setString(3, state);
-            preparedStatement.setString(4, city);
-            preparedStatement.setString(5, street);
-            preparedStatement.setInt(6, zipcode);
-            preparedStatement.setInt(7, birthyear);
-            preparedStatement.setString(8, email);
-            preparedStatement.setString(9, password);
-           
-             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("DedicatedConnection.doPost(  ) SQLException: " +
+
+            while(rs.next()){               
+            	isUser=true;
+               myuser= new User(); 
+                myuser.setFullName(rs.getString("fullname"));
+                myuser.setBirthYear(rs.getInt("birthyear"));
+                myuser.setEmail(rs.getString("email"));
+                myuser.setCity(rs.getNString("city"));
+                myuser.setStreet(rs.getString("street"));
+                myuser.setPassword(rs.getString("password"));                
+            }
+         
+        if(isUser){
+        	  HttpSession session= request.getSession();
+              session.setAttribute("user", myuser);
+        }
+          
+        }
+        catch (SQLException e) {
+            System.out.println("DedicatedConnection.doGet(  ) SQLException: " +
                     e.getMessage(  ) );
-        } finally {
-
+        }
+        finally {
             if (rs != null)
                 try { rs.close(  ); } catch (SQLException ignore) { }
             if (statement != null)
                 try { statement.close(  ); } catch (SQLException ignore) { }
         }
 
-
         // Return the conection
-        CacheConnection.checkIn(connection);
-		
-	}
-	 
+        CacheConnection.checkIn(connection);        
+             
+        return isUser; 
+	}      
+	
 
 }
+            
+		
+
+	
+
+	

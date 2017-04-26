@@ -11,7 +11,7 @@
 <body>
 	<div class="input_container input">
 		<Form method="post" action="login" class="login">
-			Email:<input type="Text" name="username" placeholder="email" /><br>
+			Email:<input type="Text" name="email" placeholder="email" /><br>
 			PassWord:<input type="password" name="password"
 				placeholder="password" />
 			<input type="submit" value="LogIn" class="logbtn">
