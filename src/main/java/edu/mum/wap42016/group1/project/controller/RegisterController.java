@@ -32,7 +32,13 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("hi samiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+		if(request.getAttribute("edit")!=null){
+			request.getRequestDispatcher("editProfiler.jsp").forward(request, response);	
+		}
+		else{
 		request.getRequestDispatcher("register.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -41,7 +47,7 @@ public class RegisterController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-	System.out.println("hi sami");
+	System.out.println("hi samiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 	String name= request.getParameter("name");
 	String password= request.getParameter("password");
 	String state=request.getParameter("state");
@@ -54,8 +60,6 @@ public class RegisterController extends HttpServlet {
 //	User user= new User(name,sex,state,city,street,email,password,year,zip);
 	UserDAO myUsers= new UserDAO(this);
 	myUsers.addUser(name,sex,state,city,street,email,password,year,zip);	
-	System.out.println("the gender is "+ sex);
-	
 	response.sendRedirect("home.jsp");
 	}
 
