@@ -19,10 +19,8 @@ import java.util.List;
 
 @WebServlet(name="CommentsController")
 public class CommentsController  extends HttpServlet{
-    //TODO change to actual user id and postid from req
-    private int userid = 1;
-    private int postid = 1;
-    private String commenttext= " ";
+    //TODO change to actual user id from session
+           private  static  int userid = 1;
 
 
 
@@ -38,6 +36,9 @@ public class CommentsController  extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int postid=Integer.parseInt(req.getParameter("postid"));
+
+        String commenttext=req.getParameter("comment");
         CommentsDAO comments = new CommentsDAO(this);
         List<Comment> currentComments = comments.getComments(postid);
         req.setAttribute("comments",currentComments);
@@ -45,13 +46,13 @@ public class CommentsController  extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String commenttext=req.getParameter("comment");
+        int postid=Integer.parseInt(req.getParameter("postid"));
+
 
         CommentsDAO comments= new CommentsDAO(this);
         comments.creatCommment(userid,postid,commenttext);
     }
-//TO DO edit
-       /* int userid= req.getParameter("");
-         int postid= req.getParameter("");
-         String commenttext=req.getParameter("")*/
+
 
 }
