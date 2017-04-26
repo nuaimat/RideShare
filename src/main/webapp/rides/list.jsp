@@ -60,11 +60,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-6">
             <c:forEach items="${rides}" var="ride">
                 <c:set var="ride_obj" value="${ride}" scope="request" />
                 <jsp:include page="/rides/ride_panel.jsp" />
             </c:forEach>
+        </div>
+        <div class="col-sm-3">
+            <div class="righttoolbox">
+                some info maybe stats
+            </div>
+
         </div>
     </div>
 
