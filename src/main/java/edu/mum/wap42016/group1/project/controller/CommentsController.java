@@ -2,6 +2,7 @@ package edu.mum.wap42016.group1.project.controller;
 
 import edu.mum.wap42016.group1.project.dao.CommentsDAO;
 import edu.mum.wap42016.group1.project.model.Comment;
+import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.ServletException;
@@ -19,10 +20,6 @@ import java.util.List;
 
 @WebServlet(name="CommentsController")
 public class CommentsController  extends HttpServlet{
-    //TODO change to actual user id from session
-           private  static  int userid = 1;
-
-
 
     @Override
     public void destroy() {
@@ -49,9 +46,10 @@ public class CommentsController  extends HttpServlet{
         String commenttext=req.getParameter("comment");
         int postid=Integer.parseInt(req.getParameter("postid"));
 
+        User u = (User) req.getSession().getAttribute("user");
 
         CommentsDAO comments= new CommentsDAO(this);
-        comments.creatCommment(userid,postid,commenttext);
+        comments.creatCommment(u.getUserid(),postid,commenttext);
     }
 
 
