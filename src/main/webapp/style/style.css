@@ -34,6 +34,10 @@ body { padding-top: 70px; }
     table#cart tfoot td .btn{display:block;}
 
 }
+.login p{
+	font-size: 10 px;
+	color: red
+}
 .register{	
 	Width: 80%;
 
