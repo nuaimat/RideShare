@@ -77,7 +77,7 @@ public class RidesDAO {
         CacheConnection.checkIn(connection);
 
         CommentsDAO commentsDAO = new CommentsDAO(context);
-        HashMap<Integer, List<Comment>> allComments = commentsDAO.getComments((ArrayList<Integer>) postIds, 33); // TODO should be user id from session
+        HashMap<Integer, List<Comment>> allComments = commentsDAO.getComments((ArrayList<Integer>) postIds); // TODO should be user id from session
         System.out.println("Found " + result.size() + " rides");
         System.out.println("allComments: " + allComments);
         List<Ride> ret = new ArrayList<>();
