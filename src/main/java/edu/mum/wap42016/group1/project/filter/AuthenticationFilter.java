@@ -32,8 +32,9 @@ public class AuthenticationFilter implements Filter {
 
         String requestPath = request.getRequestURI();
         UserDAO userDAO = new UserDAO(null);
-
-        if (needsAuthentication(requestPath) && !userDAO.isLoggedIn(request)) {
+        System.out.println("Request Path: " + requestPath + " is userLoggedin? " + userDAO.isLoggedIn(request));
+        if (needsAuthentication(requestPath, request) && !userDAO.isLoggedIn(request)) {
+        	System.out.println("Redirecting to " + request.getContextPath() + "/login");
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
             chain.doFilter(req, res); // Logged-in user found, so just continue request.
@@ -42,8 +43,10 @@ public class AuthenticationFilter implements Filter {
 
 
     //basic validation of pages that do not require authentication
-    private boolean needsAuthentication(String url) {
-        if(url.endsWith(".css") || url.endsWith(".js") || url.equals("/login") || url.equals("/logout")){
+    private boolean needsAuthentication(String url, HttpServletRequest request) {
+        if(url.endsWith(".css") || url.endsWith(".js") || 
+        		url.equals(request.getContextPath() + "/login") || 
+        		url.equals(request.getContextPath() + "/logout")){
             return false;
         }
         return true; // for everything but login
