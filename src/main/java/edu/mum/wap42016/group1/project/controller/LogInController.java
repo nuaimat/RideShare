@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.servlet4preview.RequestDispatcher;
-
 import edu.mum.wap42016.group1.project.dao.UserDAO;
 
 /**
@@ -30,9 +28,7 @@ public class LogInController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		javax.servlet.RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
-		dispatcher.forward(request, response);
+		request.getRequestDispatcher("/login.jsp").forward(request, response);
 
 	}
 
@@ -48,11 +44,10 @@ public class LogInController extends HttpServlet {
 		UserDAO user= new UserDAO(this);
 		isValid= user.validate(userName, password,request, response);
 		if(isValid){
-			response.sendRedirect("home.jsp");
-//			response.sendRedirect(this.getServletContext().getContextPath() + "/");
+			response.sendRedirect(request.getContextPath() + "/");
 		}
 		else{
-			response.sendRedirect(this.getServletContext().getContextPath() + "/login?msg=Wrong username or password");
+			response.sendRedirect(request.getContextPath() + "/login?msg=Wrong username or password");
 		}
 		
 	}
