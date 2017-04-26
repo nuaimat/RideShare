@@ -9,7 +9,7 @@
 <div class="row">
     <div class="panel panel-primary">
         <div class="panel-heading ridetitle"><span class="text-primary">${ride_obj.userid}</span><span
-                class="title-text">${ride_obj.post}</span></div>
+                class="title-text"><c:out value="${ride_obj.post}" /></span></div>
         <div class="panel-body">
             <div class="row">
                 <div class="ridedest">

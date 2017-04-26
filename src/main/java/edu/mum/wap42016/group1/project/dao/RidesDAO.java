@@ -127,6 +127,18 @@ public class RidesDAO {
         } catch (SQLException e) {
             System.out.println("RidesDAO.save() SQLException: " +
                     e.getMessage(  ) );
+            if(e.getMessage().equals("Communications link failure")){
+                try {
+                    connection.close();
+                    Thread.sleep(200);
+                } catch (SQLException e1) {
+
+                } catch (InterruptedException e1) {
+
+                }
+
+                return save(r, userid);
+            }
         } finally {
 
             if (rs != null)
