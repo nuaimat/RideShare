@@ -88,7 +88,6 @@ public class LikesDAO {
 
 
             while(rs.next()){
-                System.out.println("new entry ---  <br />");
                 Like like = new Like();
                 Timestamp timestamp = rs.getTimestamp("datecreated");
                 like.setDatecreated(timestamp);
@@ -101,7 +100,7 @@ public class LikesDAO {
             }
         }
         catch (SQLException e) {
-            System.out.println("DedicatedConnection.doGet(  ) SQLException: " +
+            System.out.println("LikesDao.getLikes(  ) SQLException: " +
                     e.getMessage(  ) );
         }
         finally {

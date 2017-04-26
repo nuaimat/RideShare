@@ -40,7 +40,6 @@ public class RidesDAO {
                     "select *, AsText(src) as srctxt, AsText(dest) as desttxt from posts order by dateupdated desc limit 30");
 
             while(rs.next()){
-                System.out.println("new entry ---  <br />");
                 int postid = rs.getInt("postid");
                 postIds.add(postid);
                 Ride ride = new Ride();
@@ -54,9 +53,7 @@ public class RidesDAO {
                 ride.setUserid(rs.getInt("userid"));
                 ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
                 ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
-                System.out.println(rs.getString("srctxt"));
 
-                
                 result.put(postid, ride);
             }
         }
@@ -109,7 +106,7 @@ public class RidesDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, userid);
             preparedStatement.setString(2, r.getPost());
-            preparedStatement.setInt(3, r.getPosttype().typeNum);
+            preparedStatement.setInt(3, r.getPosttype() == Ride.RideType.ASKED ? 1 : 0);
             preparedStatement.setString(4, r.getSrcHumanReadable());
             preparedStatement.setString(5, r.getDestHumanReadable());
             preparedStatement.setString(6, r.getSrc().toMysqlSpatialFormat() );

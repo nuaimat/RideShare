@@ -8,7 +8,7 @@
 --%>
 <dl class="comment-row">
     <c:forEach items="${ride_obj.commentList}" var="comment">
-        <dt>${comment.userid}</dt>
+        <dt>${comment.user.fullName}: </dt>
         <dd>${comment.comment}</dd>
     </c:forEach>
 </dl>

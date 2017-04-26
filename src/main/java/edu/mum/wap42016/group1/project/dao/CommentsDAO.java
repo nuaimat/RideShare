@@ -1,15 +1,14 @@
 package edu.mum.wap42016.group1.project.dao;
 
 import edu.mum.wap42016.group1.project.model.Comment;
+import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by zaid on 4/24/2017.
@@ -22,7 +21,14 @@ public class CommentsDAO {
         this.context = context;
 
     }
-    public void creatCommment(int userid,int postid, String comment){
+    public Comment creatCommment(int userid,int postid, String commentText){
+
+
+        Comment comment = new Comment();
+        comment.setComment(commentText);
+        comment.setDatecreated(new Date());
+        comment.setUserid(userid);
+        comment.setPostid(postid);
 
         // Turn on verbose output
         CacheConnection.setVerbose(true);
@@ -37,15 +43,20 @@ public class CommentsDAO {
         try {
 
             String req = "INSERT INTO comments"
-                    + "(userid, postid, comment) VALUES"
-                    + "(?,?,?)";
+                    + "(userid, postid, comment, datecreated) VALUES"
+                    + "(?,?,?, NOW())";
 
-            PreparedStatement preparedStatement = connection.prepareStatement(req);
-            preparedStatement.setInt(1, userid);
-            preparedStatement.setInt(2, postid);
-            preparedStatement.setString(3, comment);
+            PreparedStatement preparedStatement = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, comment.getUserid());
+            preparedStatement.setInt(2, comment.getPostid());
+            preparedStatement.setString(3, comment.getComment());
             System.out.printf("CommentsDAO.creatCommment " + preparedStatement.toString());
             preparedStatement.executeUpdate();
+            rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                comment.setCommentid(rs.getInt(1));
+            }
 
         }
         catch (SQLException e) {
@@ -62,6 +73,9 @@ public class CommentsDAO {
 
         // Return the conection
         CacheConnection.checkIn(connection);
+        if(comment.getCommentid() != 0)
+            return comment;
+        return null;
 
     }
         
@@ -132,25 +146,43 @@ public class CommentsDAO {
         PreparedStatement preparedStatement = null;
         ResultSet rs  = null;
         try {
-            String query = "select * from comments where postid in (?)";
+
+            StringBuilder idList = new StringBuilder();
+            for (int id : postIds) {
+                if (idList.length() > 0) {
+                    idList.append(",");
+                }
+                idList.append("?");
+            }
+
+            String query = "select c.*,u.* from comments c INNER JOIN  users u on c.userid = u.userid where postid in ("+idList+")";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, StringUtils.join(postIds, ","));
+            for (int i = 0; i < postIds.size(); i++) {
+                preparedStatement.setInt(i+1, postIds.get(i));
+            }
+
+
             System.out.println("CommentsDAO.getComments " + preparedStatement);
             rs = preparedStatement.executeQuery();
 
             while(rs.next()){
-                int postId = rs.getInt("postid");
+                int postId = rs.getInt("c.postid");
 
                 Comment comment = new Comment();
-                comment.setUserid(rs.getInt("userid"));
+                comment.setUserid(rs.getInt("c.userid"));
                 comment.setPostid(postId);
-                comment.setComment(rs.getString("comment"));
-                Timestamp timestamp = rs.getTimestamp("datecreated");
+                comment.setComment(rs.getString("c.comment"));
+                Timestamp timestamp = rs.getTimestamp("c.datecreated");
                 comment.setDatecreated(timestamp);
-                Timestamp timestamp2 = rs.getTimestamp("dateupdated");
+                Timestamp timestamp2 = rs.getTimestamp("c.dateupdated");
                 comment.setDatecreated(timestamp2);
 
-                System.out.println("Adding comment " + comment );
+                User u = new User();
+                u.setEmail(rs.getString("u.email"));
+                u.setFullName(rs.getString("u.fullname"));
+                u.setUserid(comment.getUserid());
+                comment.setUser(u);
+
                 if(!result.containsKey(postId)){
                     result.put(postId, new ArrayList<Comment>());
                 }

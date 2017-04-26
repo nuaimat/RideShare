@@ -128,8 +128,14 @@ System.out.println("it is in DAO");
 	public void logout(HttpServletRequest req){
 		req.getSession().removeAttribute("user");
 	}
-	
 
+
+	public int getCurrentUserId(HttpServletRequest req) {
+		if(isLoggedIn(req))
+			return ((User) req.getSession().getAttribute("user")).getUserid();
+		else
+			return -1;
+	}
 }
             
 		
