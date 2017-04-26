@@ -19,10 +19,11 @@ public class WeatherController extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         UserDAO userDAO = new UserDAO(this);
-        User user = userDAO.getCurrentUser(request);
-        request.setAttribute("user", user);
+        User user = userDAO.getCurrentUser(req);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/weather.jsp").forward(req, res);
     }
 }
