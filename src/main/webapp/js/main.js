@@ -37,7 +37,8 @@ $(function () {
                 // re-attach handlers to new ajax content
                 $(".add-comment-button", $($(".ridetitle").get(0)).closest(".row"))
                     .click(addCommentButtonHandler)
-                    .addClass("handler-registered");
+                    .addClass("handler-registered")
+                    .parents(".panel-footer").find(".like_post").click(likeEventHandler);
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -263,7 +264,10 @@ $(function () {
                         .addClass("handler-registered")
                         .parents(".ride-comments")
                         .find("input[type='text']")
-                        .keyup(keyupCommentHandler);
+                        .keyup(keyupCommentHandler)
+                        .parents(".panel-footer")
+                        .find(".like_post")
+                        .click(likeEventHandler);
 
                     busyLoadingRides = false;
                 },
