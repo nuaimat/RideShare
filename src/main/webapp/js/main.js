@@ -35,7 +35,7 @@ $(function () {
                 $rowParent = $($(".ridetitle").get(0)).closest(".row");
                 $($(data)).insertBefore($rowParent);
                 // re-attach handlers to new ajax content
-                $(".add-comment-button", $(data)).click(addCommentButtonHandler);
+                $(".add-comment-button", $($(".ridetitle").get(0)).closest(".row")).click(addCommentButtonHandler);
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -45,19 +45,19 @@ $(function () {
 
     var addCommentButtonHandler = function (evt) {
         $parentForm = $(this).parents(".comment_form");
-        /*console.log($(this));
-         console.log($parentForm);
-
-         console.log("sending an ajax req");
-         console.log("to " + $parentForm.attr("action") + " using: " + $parentForm.attr("method"));
-         console.log("with data: " + $parentForm.serialize());*/
         $.ajax({
             url: $parentForm.attr("action"), //this is the submit URL
             type: $parentForm.attr("method"), //or POST
             data: $parentForm.serialize(),
+            parentForm: $parentForm,
             success: function (data) {
-                console.log('successfully submitted')
-
+                var comment = JSON.parse(data);
+                console.log('successfully submitted');
+                console.log('Got ' + JSON.stringify(comment));
+                $commentsParent = this.parentForm.parents(".ride-comments");
+                $commentsParent.find(".comment-row").append($("<dt>").text(comment.user.fullName));
+                $commentsParent.find(".comment-row").append($("<dd>").text(comment.comment));
+                $commentsParent.find("input[name='comment']").val("");
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -69,6 +69,11 @@ $(function () {
     };
 
     $(".add-comment-button").click(addCommentButtonHandler);
+    $(".ride-comments input[type='text']").keyup(function(event){
+        if(event.keyCode == 13){
+            $(this).parents(".ride-comments").find(".add-comment-button").click();
+        }
+    });
 
     $("#newRideModal").modal({
         show: false

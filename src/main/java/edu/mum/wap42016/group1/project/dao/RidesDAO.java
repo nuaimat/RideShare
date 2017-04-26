@@ -124,7 +124,7 @@ public class RidesDAO {
         } catch (SQLException e) {
             System.out.println("RidesDAO.save() SQLException: " +
                     e.getMessage(  ) );
-            if(e.getMessage().equals("Communications link failure")){
+            if(e.getMessage().startsWith("Communications link failure")){
                 try {
                     connection.close();
                     Thread.sleep(200);
