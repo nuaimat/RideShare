@@ -93,7 +93,8 @@ System.out.println("it is in DAO");
                 myuser.setEmail(rs.getString("email"));
                 myuser.setCity(rs.getNString("city"));
                 myuser.setStreet(rs.getString("street"));
-                myuser.setPassword(rs.getString("password"));                
+                myuser.setPassword(rs.getString("password"));
+				myuser.setUserid(rs.getInt("userid"));
             }
          
         if(isUser){

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mo nuaimat on 4/18/17.
@@ -41,10 +43,10 @@ public class AuthenticationFilter implements Filter {
 
     //basic validation of pages that do not require authentication
     private boolean needsAuthentication(String url) {
-        if(url.endsWith(".css") || url.endsWith(".js")){
+        if(url.endsWith(".css") || url.endsWith(".js") || url.equals("/login") || url.equals("/logout")){
             return false;
         }
-        return !url.equals("/login"); // for everything but login
+        return true; // for everything but login
     }
 
     @Override

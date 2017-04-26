@@ -46,7 +46,7 @@
             <c:choose>
                 <c:when test="${loggedInUser}">
                     <c:set value="Hello ${sessionScope.user.email}" var="welcome_msg" />
-                    <c:set value="/logout" var="profile_link" />
+                    <c:set value="/profile" var="profile_link" />
                 </c:when>
                 <c:otherwise>
                     <c:set value="Login" var="welcome_msg" />
@@ -57,8 +57,8 @@
                 <li><a href="<c:url value="${profile_link}" />"><span class="glyphicon glyphicon-user"></span>
                         ${welcome_msg}
                     </a></li>
-                <li><a href="<c:url value="/cart" />"><span class="glyphicon glyphicon-shopping-cart"></span>
-                    Cart (<span class="items">${sessionScope.cart.numItems}</span>)</a></li>
+                <li><a href="<c:url value="/logout" />"><span class="glyphicon glyphicon-log-out"></span>
+                    Logout</a></li>
             </ul>
         </div>
     </div>

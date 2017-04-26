@@ -44,7 +44,7 @@ public class CommentsDAO {
             preparedStatement.setInt(1, userid);
             preparedStatement.setInt(2, postid);
             preparedStatement.setString(3, comment);
-
+            System.out.printf("CommentsDAO.creatCommment " + preparedStatement.toString());
             preparedStatement.executeUpdate();
 
         }

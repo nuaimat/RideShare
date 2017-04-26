@@ -28,7 +28,15 @@ public class LogInController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/login.jsp").forward(request, response);
+		System.out.println(request.getServletPath());
+		if(request.getServletPath().equals("/logout")){
+			UserDAO userDAO = new UserDAO(this);
+			userDAO.logout(request);
+			response.sendRedirect(request.getContextPath() + "/login?msg=successfully logged out");
+		} else {
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
+
 
 	}
 
