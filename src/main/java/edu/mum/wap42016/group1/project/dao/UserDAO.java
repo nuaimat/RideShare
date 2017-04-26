@@ -1,25 +1,13 @@
 package edu.mum.wap42016.group1.project.dao;
 
-import java.awt.List;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.ArrayList;
+import edu.mum.wap42016.group1.project.model.User;
+import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-
-import org.apache.tomcat.jni.Address;
-
-import edu.mum.wap42016.group1.project.model.Ride;
-import edu.mum.wap42016.group1.project.model.User;
-import edu.mum.wap42016.group1.project.util.CacheConnection;
+import java.sql.*;
 
 public class UserDAO {
 	HttpServlet context;

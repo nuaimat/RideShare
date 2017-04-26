@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div class="row" style="margin-right: 2em">
+<div class="row">
     <div class="panel panel-primary">
         <div class="panel-heading ridetitle"><span class="text-primary">${ride_obj.userid}</span><span class="title-text">${ride_obj.post}</span></div>
         <div class="panel-body">

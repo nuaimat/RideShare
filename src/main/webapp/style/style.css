@@ -124,7 +124,7 @@ body { padding-top: 70px; }
 .panel-footer .comment-row dt, .panel-footer .comment-row dd {
     float: left;
 }
-.panel-footer .comment-row dt {
+.panel-footer .comment-row dt, .comment-form {
     clear: left
 }
 .panel-footer .comment-row dt {

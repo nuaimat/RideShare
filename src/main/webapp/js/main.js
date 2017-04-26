@@ -27,20 +27,41 @@ function geoLocErrorFunction(err) {
 
 $(function () {
     $("#submit_new_ride").click(function (evt) {
-        console.log("sending an ajax req");
-        console.log("to " + $('#new-ride-form').attr("action") + " using: " + $('#new-ride-form').attr("method"));
-        console.log("with data: " + $('#new-ride-form').serialize());
         $.ajax({
             url: $('#new-ride-form').attr("action"), //this is the submit URL
             type: $('#new-ride-form').attr("method"), //or POST
             data: $('#new-ride-form').serialize(),
             success: function (data) {
-                alert('successfully submitted')
+                console.log('successfully submitted')
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
             }
         });
+    });
+
+    $(".add-comment-button").click(function (evt) {
+        $parentForm = $(this).parents(".comment_form");
+        /*console.log($(this));
+        console.log($parentForm);
+
+        console.log("sending an ajax req");
+        console.log("to " + $parentForm.attr("action") + " using: " + $parentForm.attr("method"));
+        console.log("with data: " + $parentForm.serialize());*/
+        $.ajax({
+            url: $parentForm.attr("action"), //this is the submit URL
+            type: $parentForm.attr("method"), //or POST
+            data: $parentForm.serialize(),
+            success: function (data) {
+                console.log('successfully submitted')
+            },
+            error: function (err) {
+                console.log("Error during ajax " + err);
+            }
+        });
+
+        evt.preventDefault();
+        evt.stopPropagation();
     });
 
     $("#newRideModal").modal({
