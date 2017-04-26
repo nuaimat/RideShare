@@ -6,8 +6,16 @@
   Time: 4:35 PM
   To change this template use File | Settings | File Templates.
 --%>
-<ul>
+<dl class="comment-row">
 <c:forEach items="${ride_obj.commentList}" var="comment">
-     <li>${comment.comment}</li>
+     <dt>${comment.userid}</dt>
+     <dd>${comment.comment}</dd>
 </c:forEach>
-</ul>
+</dl>
+<form method="post" action="/comments">
+     <input type="text" class="form-control" name="comment">
+     <input type="hidden" name="postid" value="${ride_obj.postid}">
+     <button type="button" class="btn btn-default add-comment-button">
+          Submit
+     </button>
+</form>

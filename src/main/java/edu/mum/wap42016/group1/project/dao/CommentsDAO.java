@@ -120,7 +120,7 @@ public class CommentsDAO {
     }
 
 
-    public HashMap<Integer, List<Comment>> getComments(ArrayList<Integer> postIds,int userId){
+    public HashMap<Integer, List<Comment>> getComments(ArrayList<Integer> postIds){
         HashMap<Integer, List<Comment>> result = new HashMap<>();
 
         // Turn on verbose output

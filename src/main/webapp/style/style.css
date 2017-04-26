@@ -120,3 +120,13 @@ body { padding-top: 70px; }
 .panel-footer .ride-likes, .panel-footer .ride-comments {
     padding: 10px 15px;
 }
+
+.panel-footer .comment-row dt, .panel-footer .comment-row dd {
+    float: left;
+}
+.panel-footer .comment-row dt {
+    clear: left
+}
+.panel-footer .comment-row dt {
+    margin-right: 1em;
+}
