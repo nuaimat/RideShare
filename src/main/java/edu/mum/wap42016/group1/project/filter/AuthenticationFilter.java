@@ -34,6 +34,7 @@ public class AuthenticationFilter implements Filter {
         UserDAO userDAO = new UserDAO(null);
         System.out.println("Request Path: " + requestPath + " is userLoggedin? " + userDAO.isLoggedIn(request));
         if (needsAuthentication(requestPath, request) && !userDAO.isLoggedIn(request)) {
+        	System.out.println("checkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
         	System.out.println("Redirecting to " + request.getContextPath() + "/login");
             response.sendRedirect(request.getContextPath() + "/login");
         } else {
@@ -46,7 +47,8 @@ public class AuthenticationFilter implements Filter {
     private boolean needsAuthentication(String url, HttpServletRequest request) {
         if(url.endsWith(".css") || url.endsWith(".js") || 
         		url.equals(request.getContextPath() + "/login") || 
-        		url.equals(request.getContextPath() + "/logout")){
+        		url.equals(request.getContextPath() + "/logout")|| 
+        		url.equals(request.getContextPath() + "/register")){
             return false;
         }
         return true; // for everything but login
