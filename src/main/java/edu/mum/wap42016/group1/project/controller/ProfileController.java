@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.model.User;
 
 /**
@@ -28,11 +29,12 @@ public class ProfileController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub		
-		System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii2");
-		User user=(User) request.getSession().getAttribute("user");
-		System.out.println(user.getZipCode());
-//		
+		// TODO Auto-generated method stub	
+		UserDAO userObj=new UserDAO(this);
+		User user=userObj.getCurrentUser(request);
+		System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii2");		
+		System.out.println(user.getEmail());
+		request.getRequestDispatcher("profile.jsp").forward(request, response);//		
 		
 	}
 
@@ -41,12 +43,7 @@ public class ProfileController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-		User user=(User) request.getSession().getAttribute("user");
-		System.out.println(user.getZipCode());
-		response.sendRedirect("home.jsp");
 		
-
 }
 	
 }
