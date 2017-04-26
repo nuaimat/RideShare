@@ -22,9 +22,9 @@ public class CommentsDAO {
         this.context = context;
 
     }
-    public void creatCommment(int userid,int postid, String comment){
+    public Comment creatCommment(int userid,int postid, String comment){
 
-        // Turn on verbose output
+// Turn on verbose output
         CacheConnection.setVerbose(true);
 
 
@@ -32,7 +32,9 @@ public class CommentsDAO {
         Connection connection = CacheConnection.checkOut(context);
         PreparedStatement statement  = null;
         ResultSet rs  = null;
-        String     userName   = null;
+        int last_inserted_id=-1;
+        Comment currentComment = null;
+
 
         try {
 
@@ -46,11 +48,43 @@ public class CommentsDAO {
             preparedStatement.setString(3, comment);
             System.out.printf("CommentsDAO.creatCommment " + preparedStatement.toString());
             preparedStatement.executeUpdate();
+            rs = preparedStatement.getGeneratedKeys();
+            if(rs.next())
+            {
+                last_inserted_id = rs.getInt(1);
+                System.out.println("inserted with id " + last_inserted_id);
+
+                String query = "select * from comments where commentid= ?" ;
+                preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1, last_inserted_id);
+                currentComment.setCommentid(rs.getInt("commentid"));
+                currentComment.setUserid(rs.getInt("userid"));
+                currentComment.setPostid(rs.getInt("postid"));
+                currentComment.setComment(rs.getString("comment"));
+                Timestamp timestamp = rs.getTimestamp("datecreated");
+                currentComment.setDatecreated(timestamp);
+                Timestamp timestamp2 = rs.getTimestamp("dateupdated");
+                currentComment.setDatecreated(timestamp2);
+
+
+            }
 
         }
         catch (SQLException e) {
-            System.out.println("DedicatedConnection.doPost(  ) SQLException: " +
+            System.out.println("CommentsDAO  SQLException: " +
                     e.getMessage(  ) );
+            if(e.getMessage().equals("Communications link failure")) {
+                try {
+                    connection.close();
+                    Thread.sleep(200);
+                } catch (SQLException e1) {
+
+                } catch (InterruptedException e1) {
+
+                }
+
+                return creatCommment(userid, postid, comment);
+            }
         } finally {
 
             if (rs != null)
@@ -62,9 +96,9 @@ public class CommentsDAO {
 
         // Return the conection
         CacheConnection.checkIn(connection);
-
+        return currentComment;
     }
-        
+
 
 
 
@@ -175,7 +209,8 @@ public class CommentsDAO {
         return result;
     }
 
-    }
+}
+
 
 
 

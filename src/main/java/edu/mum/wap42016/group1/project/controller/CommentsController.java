@@ -1,6 +1,7 @@
 package edu.mum.wap42016.group1.project.controller;
 
 import edu.mum.wap42016.group1.project.dao.CommentsDAO;
+import edu.mum.wap42016.group1.project.dao.JSONCommentsConvertor;
 import edu.mum.wap42016.group1.project.model.Comment;
 import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
@@ -49,7 +50,22 @@ public class CommentsController  extends HttpServlet{
         User u = (User) req.getSession().getAttribute("user");
 
         CommentsDAO comments= new CommentsDAO(this);
-        comments.creatCommment(u.getUserid(),postid,commenttext);
+        Comment comment= comments.creatCommment(u.getUserid(),postid,commenttext);
+
+
+        JSONCommentsConvertor convertor= new JSONCommentsConvertor();
+        String  jsoncomment = convertor.createCommentJSON(comment);
+
+        //TO DO identify which attribute in the JSP needs the json Stringfied comment
+        /*
+      if (comment != null){
+        req.setAttribute("comment", jsoncomment);
+        req.getRequestDispatcher("/rides/ride_comments.jsp").forward(req, resp);
+    } else {
+        resp.getWriter().print("");
+    }*/
+
+
     }
 
 
