@@ -102,8 +102,20 @@ public class UserDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("DedicatedConnection.doGet(  ) SQLException: " +
+            System.out.println("UserDAO.validate(  ) SQLException: " +
                     e.getMessage());
+            if(e.getMessage().startsWith("Communications link failure")){
+                try {
+                    connection.close();
+                    Thread.sleep(200);
+                } catch (SQLException e1) {
+
+                } catch (InterruptedException e1) {
+
+                }
+
+                return validate(userName, password, request, response);
+            }
         } finally {
             if (rs != null)
                 try {

@@ -12,7 +12,7 @@
         <dd>${comment.comment}</dd>
     </c:forEach>
 </dl>
-<form method="post" action="/comments" class="comment_form">
+<form method="post" action="/comments" class="comment_form" onsubmit="return false">
     <div class="row">
         <div class="col-sm-10"><input type="text" class="form-control" name="comment">
             <input type="hidden" name="postid" value="${ride_obj.postid}"></div>

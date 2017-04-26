@@ -28,7 +28,7 @@
                                     <label for="ridetype">Are you?</label>
                                     <select class="form-control" id="ridetype" name="ridetype">
                                         <option value="0">Offering a ride - I am a driver</option>
-                                        <option value="0">Requesting a ride - I am a passenger</option>
+                                        <option value="1">Asking for a ride - I am a passenger</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
