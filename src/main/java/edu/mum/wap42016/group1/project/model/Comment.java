@@ -12,6 +12,7 @@ public class Comment {
     private  String comment;
     private Date datecreated;
     private Date dateupdated;
+    private User user;
 
     public int getCommentid() {
         return commentid;
@@ -59,5 +60,13 @@ public class Comment {
 
     public void setDateupdated(Date dateupdated) {
         this.dateupdated = dateupdated;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
