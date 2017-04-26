@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * Created by Mo nuaimat on 4/24/17.
  */
-public class Ride {
+public class Ride implements Comparable{
+
     public enum RideType {
         OFFERED(0),
         ASKED(1);
@@ -112,4 +113,18 @@ public class Ride {
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
     }
+
+
+    @Override
+    public boolean equals(Object o){
+        Ride r = (Ride) o;
+        return r.getPostid() == this.getPostid();
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Ride r = (Ride) o;
+        return r.getDateCreated().compareTo(this.getDateCreated());
+    }
+
 }

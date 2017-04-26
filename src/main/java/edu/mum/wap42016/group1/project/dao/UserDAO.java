@@ -29,8 +29,8 @@ System.out.println("it is in DAO");
 		try {
 
 			String req = "INSERT INTO users"
-					+ "( fullname, gender, state, city, street, zipcode,birthyear,email, password) VALUES"
-					+ "(?,?,?,?,?,?,?,?,?)";
+					+ "( fullname, gender, state, city, street, zipcode, birthyear,email, password, datecreated) VALUES"
+					+ "(?,?,?,?,?,?,?,?,?, NOW())";
 
 			PreparedStatement preparedStatement = connection.prepareStatement(req);
 			preparedStatement.setString(1, fullname);
@@ -117,7 +117,16 @@ System.out.println("it is in DAO");
         CacheConnection.checkIn(connection);        
              
         return isUser; 
-	}      
+	}
+
+
+	public boolean isLoggedIn(HttpServletRequest req){
+		return req.getSession().getAttribute("user") != null;
+	}
+
+	public void logout(HttpServletRequest req){
+		req.getSession().removeAttribute("user");
+	}
 	
 
 }

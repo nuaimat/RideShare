@@ -7,10 +7,8 @@ import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Mo nuaimat on 4/24/17.
@@ -89,6 +87,8 @@ public class RidesDAO {
             ret.add(ride);
         }
 
+        Collections.sort(ret);
+
         return ret;
     }
 
@@ -127,6 +127,18 @@ public class RidesDAO {
         } catch (SQLException e) {
             System.out.println("RidesDAO.save() SQLException: " +
                     e.getMessage(  ) );
+            if(e.getMessage().equals("Communications link failure")){
+                try {
+                    connection.close();
+                    Thread.sleep(200);
+                } catch (SQLException e1) {
+
+                } catch (InterruptedException e1) {
+
+                }
+
+                return save(r, userid);
+            }
         } finally {
 
             if (rs != null)

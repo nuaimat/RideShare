@@ -32,7 +32,10 @@ $(function () {
             type: $('#new-ride-form').attr("method"), //or POST
             data: $('#new-ride-form').serialize(),
             success: function (data) {
-                console.log('successfully submitted')
+                $rowParent = $($(".ridetitle").get(0)).closest(".row");
+                $($(data)).insertBefore($rowParent);
+                // re-attach handlers to new ajax content
+                $(".add-comment-button", $(data)).click(addCommentButtonHandler);
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -40,20 +43,21 @@ $(function () {
         });
     });
 
-    $(".add-comment-button").click(function (evt) {
+    var addCommentButtonHandler = function (evt) {
         $parentForm = $(this).parents(".comment_form");
         /*console.log($(this));
-        console.log($parentForm);
+         console.log($parentForm);
 
-        console.log("sending an ajax req");
-        console.log("to " + $parentForm.attr("action") + " using: " + $parentForm.attr("method"));
-        console.log("with data: " + $parentForm.serialize());*/
+         console.log("sending an ajax req");
+         console.log("to " + $parentForm.attr("action") + " using: " + $parentForm.attr("method"));
+         console.log("with data: " + $parentForm.serialize());*/
         $.ajax({
             url: $parentForm.attr("action"), //this is the submit URL
             type: $parentForm.attr("method"), //or POST
             data: $parentForm.serialize(),
             success: function (data) {
                 console.log('successfully submitted')
+
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -62,7 +66,9 @@ $(function () {
 
         evt.preventDefault();
         evt.stopPropagation();
-    });
+    };
+
+    $(".add-comment-button").click(addCommentButtonHandler);
 
     $("#newRideModal").modal({
         show: false
