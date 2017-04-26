@@ -3,6 +3,7 @@ package edu.mum.wap42016.group1.project.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mum.wap42016.group1.project.dao.RidesDAO;
+import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
@@ -48,10 +49,11 @@ public class RidesController extends HttpServlet {
         r.setUserid(1); // TODO change with user id
 
         RidesDAO ridesDAO = new RidesDAO(this);
+        UserDAO userDAO = new UserDAO(this);
 
 
         // TODO change user id
-        boolean saved = ridesDAO.save(r, 1);
+        boolean saved = ridesDAO.save(r, userDAO.getCurrentUserId(req));
         res.setContentType("text/html");
         if(saved) {
             //ObjectMapper objectMapper = new ObjectMapper();

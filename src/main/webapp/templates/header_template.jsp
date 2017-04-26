@@ -35,6 +35,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="<c:url value="/" />">Home</a></li>
+                <li><a href="<c:url value="/weather" />">Weather</a></li>
                 <%--<li><a href="<c:url value="/" />">Products</a></li>
                 <li><a href="<c:url value="/cart" />">Shopping Cart</a></li>
                 <li><a href="#">Stores</a></li>

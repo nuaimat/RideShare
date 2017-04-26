@@ -1,7 +1,9 @@
 package edu.mum.wap42016.group1.project.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mum.wap42016.group1.project.dao.CommentsDAO;
-import edu.mum.wap42016.group1.project.dao.JSONCommentsConvertor;
+import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.model.Comment;
 import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @WebServlet(name="CommentsController")
 public class CommentsController  extends HttpServlet{
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void destroy() {
@@ -30,6 +33,7 @@ public class CommentsController  extends HttpServlet{
     @Override
     public void init() throws ServletException {
         Connection connection = CacheConnection.checkOut( this ); // just to cache it
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     @Override
@@ -47,25 +51,11 @@ public class CommentsController  extends HttpServlet{
         String commenttext=req.getParameter("comment");
         int postid=Integer.parseInt(req.getParameter("postid"));
 
-        User u = (User) req.getSession().getAttribute("user");
-
+        UserDAO userDAO = new UserDAO(this);
         CommentsDAO comments= new CommentsDAO(this);
-        Comment comment= comments.creatCommment(u.getUserid(),postid,commenttext);
 
-
-        JSONCommentsConvertor convertor= new JSONCommentsConvertor();
-        String  jsoncomment = convertor.createCommentJSON(comment);
-
-        //TO DO identify which attribute in the JSP needs the json Stringfied comment
-        /*
-      if (comment != null){
-        req.setAttribute("comment", jsoncomment);
-        req.getRequestDispatcher("/rides/ride_comments.jsp").forward(req, resp);
-    } else {
-        resp.getWriter().print("");
-    }*/
-
-
+        Comment c = comments.createCommment(req, userDAO,postid,commenttext);
+        resp.getWriter().print(objectMapper.writeValueAsString(c));
     }
 
 
