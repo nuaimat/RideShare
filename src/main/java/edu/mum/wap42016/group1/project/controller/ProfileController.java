@@ -31,7 +31,7 @@ public class ProfileController extends HttpServlet {
 		// TODO Auto-generated method stub		
 		System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii2");
 		User user=(User) request.getSession().getAttribute("user");
-		System.out.println(user.getZipCode());
+		System.out.println(user);
 //		
 		
 	}
