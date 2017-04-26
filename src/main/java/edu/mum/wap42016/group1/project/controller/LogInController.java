@@ -12,7 +12,7 @@ import edu.mum.wap42016.group1.project.dao.UserDAO;
 /**
  * Servlet implementation class LogInController
  */
-@WebServlet("/login")
+//@WebServlet("/login")
 public class LogInController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,7 +29,7 @@ public class LogInController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("login.jsp");
 	}
 
 	/**
@@ -37,6 +37,7 @@ public class LogInController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("it is post log in");
 		boolean isValid;
 		String userName =  request.getParameter("email");
 		String password =  request.getParameter("password");
