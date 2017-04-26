@@ -72,8 +72,14 @@
         <servlet-name>likes</servlet-name>
         <url-pattern>/likes</url-pattern>
     </servlet-mapping>
-
-
+    <servlet>
+        <servlet-name>WeatherController</servlet-name>
+        <servlet-class>edu.mum.wap42016.group1.project.controller.WeatherController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WeatherController</servlet-name>
+        <url-pattern>/weather</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>auth_filter</filter-name>
         <filter-class>edu.mum.wap42016.group1.project.filter.AuthenticationFilter</filter-class>
