@@ -146,3 +146,14 @@ body { padding-top: 70px; }
 .ridedest .badge {
     margin-left: 1em;
 }
+.procontainer{
+	margin: auto;
+	width: 40em;
+}
+.procontainer h2{
+	font-family: sans-serif;
+}
+.address1{	
+	background-color:#42f4ce;
+	
+}
