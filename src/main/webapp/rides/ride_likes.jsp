@@ -9,7 +9,7 @@
 <c:choose>
     <c:when test="${ride_obj.likedByCurrentUser}"><a href="#" class="unlike_post">Dislike</a></c:when>
     <c:otherwise>
-        <c:when test="${ride_obj.likedByCurrentUser}"><a href="#" class="like_post">Like</a></c:when>
+        <a href="#" class="like_post">Like</a>
     </c:otherwise>
 </c:choose>
-Liked by <span class="text-primary">Zaid and 5 others</span> ${ride_obj.likedByCurrentUser} ? and ${ride_obj.likesCount}
+Liked by <span class="text-primary">${ride_obj.likesCount} Users</span>

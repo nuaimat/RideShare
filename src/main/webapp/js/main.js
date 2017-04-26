@@ -78,7 +78,7 @@ $(function () {
     $(".add-comment-button").click(addCommentButtonHandler).addClass("handler-registered");
     $(".ride-comments input[type='text']").keyup(keyupCommentHandler);
 
-    $(".like_post").click(function (evt) {
+    var likeEventHandler = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
         $parentForm = $(this).parents(".panel-footer").find(".comment_form");
@@ -86,26 +86,63 @@ $(function () {
         $.ajax({
             url: "/likes", //this is the submit URL
             type: "POST", //or POST
-            data: {postid: $parentForm.find("input[name='postid']").val() },
+            data: {postid: $parentForm.find("input[name='postid']").val(), action: "like" },
             likeLink: $(this),
             success: function (data) {
                 console.log(data);
-                var like = JSON.parse(data);
+                var like = data;
+                if(data == null || data.result <= 0){
+                    return;
+                }
                 console.log(this.likeLink);
+                $likeLink = this.likeLink;
+                var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
+                $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) + 1 + " Users");
+                $likeLink.text("Unlike");
+                $likeLink.unbind( "click" );
+                $likeLink.click(dislikeEventHandler);
 
-                /* $commentsParent = this.parentForm.parents(".ride-comments");
-                $commentsParent.find(".comment-row").append($("<dt>").text(comment.user.fullName));
-                $commentsParent.find(".comment-row").append($("<dd>").text(comment.comment));
-                $commentsParent.find("input[name='comment']").val(""); */
+
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
             }
         });
+    };
+
+    var dislikeEventHandler = function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        $parentForm = $(this).parents(".panel-footer").find(".comment_form");
+
+        $.ajax({
+            url: "/likes", //this is the submit URL
+            type: "POST", //or POST
+            data: {postid: $parentForm.find("input[name='postid']").val(), action: "dislike" },
+            likeLink: $(this),
+            success: function (data) {
+                console.log(data);
+                var like = data;
+                if(data == null || data.result <= 0){
+                    return;
+                }
+                console.log(this.likeLink);
+                $likeLink = this.likeLink;
+                var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
+                $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) - 1 + " Users");
+                $likeLink.text("Like");
+                $likeLink.unbind( "click" );
+                $likeLink.click(likeEventHandler);
 
 
-    });
+            },
+            error: function (err) {
+                console.log("Error during ajax " + err);
+            }
+        });
+    };
 
+    $(".like_post").click(likeEventHandler);
 
     $("#newRideModal").modal({
         show: false
