@@ -78,6 +78,35 @@ $(function () {
     $(".add-comment-button").click(addCommentButtonHandler).addClass("handler-registered");
     $(".ride-comments input[type='text']").keyup(keyupCommentHandler);
 
+    $(".like_post").click(function (evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        $parentForm = $(this).parents(".panel-footer").find(".comment_form");
+
+        $.ajax({
+            url: "/likes", //this is the submit URL
+            type: "POST", //or POST
+            data: {postid: $parentForm.find("input[name='postid']").val() },
+            likeLink: $(this),
+            success: function (data) {
+                console.log(data);
+                var like = JSON.parse(data);
+                console.log(this.likeLink);
+
+                /* $commentsParent = this.parentForm.parents(".ride-comments");
+                $commentsParent.find(".comment-row").append($("<dt>").text(comment.user.fullName));
+                $commentsParent.find(".comment-row").append($("<dd>").text(comment.comment));
+                $commentsParent.find("input[name='comment']").val(""); */
+            },
+            error: function (err) {
+                console.log("Error during ajax " + err);
+            }
+        });
+
+
+    });
+
+
     $("#newRideModal").modal({
         show: false
     }).on("shown.bs.modal", function () {

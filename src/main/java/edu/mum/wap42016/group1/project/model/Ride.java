@@ -32,6 +32,8 @@ public class Ride implements Comparable{
     //User user;
     private List<Comment> commentList = new ArrayList<>();
     private User user;
+    private boolean likedByCurrentUser;
+    private int likesCount;
 
 
 
@@ -135,5 +137,21 @@ public class Ride implements Comparable{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isLikedByCurrentUser() {
+        return likedByCurrentUser;
+    }
+
+    public void setLikedByCurrentUser(boolean likedByCurrentUser) {
+        likedByCurrentUser = likedByCurrentUser;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
     }
 }
