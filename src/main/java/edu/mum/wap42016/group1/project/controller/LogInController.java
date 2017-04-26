@@ -37,10 +37,17 @@ public class LogInController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		boolean isValid;
 		String userName =  request.getParameter("email");
 		String password =  request.getParameter("password");
 		UserDAO user= new UserDAO(this);
-		user.validate(userName, password,request, response);
+		isValid= user.validate(userName, password,request, response);
+		if(isValid){
+			response.sendRedirect("home.jsp");
+		}
+		else{
+			response.sendRedirect("login.jsp");
+		}
 		
 	}
 
