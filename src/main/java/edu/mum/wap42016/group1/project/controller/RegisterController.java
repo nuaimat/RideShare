@@ -53,8 +53,8 @@ public class RegisterController extends HttpServlet {
 	String street=request.getParameter("street");
 //	User user= new User(name,sex,state,city,street,email,password,year,zip);
 	UserDAO myUsers= new UserDAO(this);
-	myUsers.addUser(name,sex,state,city,street,email,password,year,zip);
-	
+	myUsers.addUser(name,sex,state,city,street,email,password,year,zip);	
+	System.out.println("the gender is "+ sex);
 	
 	response.sendRedirect("home.jsp");
 	}

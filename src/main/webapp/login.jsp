@@ -10,7 +10,9 @@
 </head>
 <body>
 	<div class="input_container input">
+		
 		<Form method="post" action="login" class="login">
+		    <p>${param.msg}</p>
 			Email:<input type="Text" name="email" placeholder="email" /><br>
 			PassWord:<input type="password" name="password"
 				placeholder="password" />
