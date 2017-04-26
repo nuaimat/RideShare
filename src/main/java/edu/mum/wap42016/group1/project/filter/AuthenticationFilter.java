@@ -41,7 +41,9 @@ public class AuthenticationFilter implements Filter {
 
     //basic validation of pages that do not require authentication
     private boolean needsAuthentication(String url) {
-        System.out.println(url);
+        if(url.endsWith(".css") || url.endsWith(".js")){
+            return false;
+        }
         return !url.equals("/login"); // for everything but login
     }
 

@@ -40,15 +40,17 @@
                 <li><a href="#">Stores</a></li>
                 <li><a href="#">Contact</a></li> --%>
             </ul>
-            <c:if test="${not empty username}" var="loggedInUser" scope="request" />
+            <c:out value="${sessionScope.name}"/>
+
+            <c:if test="${not empty sessionScope.user.email}" var="loggedInUser" scope="request" />
             <c:choose>
                 <c:when test="${loggedInUser}">
-                    <c:set value="Hello ${username}" var="welcome_msg" />
+                    <c:set value="Hello ${sessionScope.user.email}" var="welcome_msg" />
                     <c:set value="/logout" var="profile_link" />
                 </c:when>
                 <c:otherwise>
-                    <c:set value="Your Account" var="welcome_msg" />
-                    <c:set value="#" var="profile_link" />
+                    <c:set value="Login" var="welcome_msg" />
+                    <c:set value="/login" var="profile_link" />
                 </c:otherwise>
             </c:choose>
             <ul class="nav navbar-nav navbar-right">
