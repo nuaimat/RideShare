@@ -54,7 +54,7 @@ public class CommentsController  extends HttpServlet{
         UserDAO userDAO = new UserDAO(this);
         CommentsDAO comments= new CommentsDAO(this);
 
-        Comment c = comments.creatCommment(userDAO.getCurrentUserId(req),postid,commenttext);
+        Comment c = comments.createCommment(req, userDAO,postid,commenttext);
         resp.getWriter().print(objectMapper.writeValueAsString(c));
     }
 

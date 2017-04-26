@@ -6,6 +6,7 @@ import edu.mum.wap42016.group1.project.util.CacheConnection;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -21,13 +22,13 @@ public class CommentsDAO {
         this.context = context;
 
     }
-    public Comment creatCommment(int userid,int postid, String commentText){
+    public Comment createCommment(HttpServletRequest request, UserDAO userDAO, int postid, String commentText){
 
 
         Comment comment = new Comment();
         comment.setComment(commentText);
         comment.setDatecreated(new Date());
-        comment.setUserid(userid);
+        comment.setUserid(userDAO.getCurrentUserId(request));
         comment.setPostid(postid);
 
         // Turn on verbose output
@@ -57,6 +58,8 @@ public class CommentsDAO {
             {
                 comment.setCommentid(rs.getInt(1));
             }
+
+            comment.setUser(userDAO.getCurrentUser(request));
 
         }
         catch (SQLException e) {
