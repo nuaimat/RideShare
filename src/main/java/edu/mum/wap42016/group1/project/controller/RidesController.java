@@ -68,10 +68,20 @@ public class RidesController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        String format = req.getParameter("format");
         RidesDAO ridesDAO = new RidesDAO(this);
-        List<Ride> currentRides = ridesDAO.getRides(0);
 
-        req.setAttribute("rides", currentRides);
-        req.getRequestDispatcher("/rides/list.jsp").forward(req, res);
+        if("ajax".equals(format)){
+            List<Ride> currentRides = ridesDAO.getRides(Integer.parseInt(req.getParameter("page"))); // 1 is page number
+            req.setAttribute("rides", currentRides);
+            req.getRequestDispatcher("/rides/ajax_list.jsp").forward(req, res);
+        } else {
+            List<Ride> currentRides = ridesDAO.getRides(1); // 1 is page number
+            req.setAttribute("rides", currentRides);
+            req.getRequestDispatcher("/rides/list.jsp").forward(req, res);
+        }
+
+
+
     }
 }

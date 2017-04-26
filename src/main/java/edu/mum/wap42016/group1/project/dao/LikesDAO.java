@@ -80,12 +80,21 @@ public class LikesDAO {
             // Test the connection
             statement = connection.createStatement();
 
-            String que= "select * from likes where postid in (?);\n";
+            StringBuilder idList = new StringBuilder();
+            for (int id : postids) {
+                if (idList.length() > 0) {
+                    idList.append(",");
+                }
+                idList.append("?");
+            }
+            String que= "select * from likes where postid in ("+idList+")";
 
             PreparedStatement preparedStatement = connection.prepareStatement(que);
-            preparedStatement.setArray(1, (Array) postids);
+            for (int i = 0; i < postids.size(); i++) {
+                preparedStatement.setInt(i+1, postids.get(i));
+            }
             rs = statement.executeQuery(que);
-
+            System.out.println(que);
 
             while(rs.next()){
                 Like like = new Like();

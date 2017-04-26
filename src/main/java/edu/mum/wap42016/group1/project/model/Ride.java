@@ -31,6 +31,7 @@ public class Ride implements Comparable{
     private int userid;
     //User user;
     private List<Comment> commentList = new ArrayList<>();
+    private User user;
 
 
 
@@ -127,4 +128,12 @@ public class Ride implements Comparable{
         return r.getDateCreated().compareTo(this.getDateCreated());
     }
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

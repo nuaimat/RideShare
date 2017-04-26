@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" id="rides_list_col">
             <c:forEach items="${rides}" var="ride">
                 <c:set var="ride_obj" value="${ride}" scope="request" />
                 <jsp:include page="/rides/ride_panel.jsp" />

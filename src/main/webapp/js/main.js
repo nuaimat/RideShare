@@ -35,7 +35,9 @@ $(function () {
                 $rowParent = $($(".ridetitle").get(0)).closest(".row");
                 $($(data)).insertBefore($rowParent);
                 // re-attach handlers to new ajax content
-                $(".add-comment-button", $($(".ridetitle").get(0)).closest(".row")).click(addCommentButtonHandler);
+                $(".add-comment-button", $($(".ridetitle").get(0)).closest(".row"))
+                    .click(addCommentButtonHandler)
+                    .addClass("handler-registered");
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -52,8 +54,7 @@ $(function () {
             parentForm: $parentForm,
             success: function (data) {
                 var comment = JSON.parse(data);
-                console.log('successfully submitted');
-                console.log('Got ' + JSON.stringify(comment));
+
                 $commentsParent = this.parentForm.parents(".ride-comments");
                 $commentsParent.find(".comment-row").append($("<dt>").text(comment.user.fullName));
                 $commentsParent.find(".comment-row").append($("<dd>").text(comment.comment));
@@ -68,12 +69,14 @@ $(function () {
         evt.stopPropagation();
     };
 
-    $(".add-comment-button").click(addCommentButtonHandler);
-    $(".ride-comments input[type='text']").keyup(function(event){
+    var keyupCommentHandler = function(event){
         if(event.keyCode == 13){
             $(this).parents(".ride-comments").find(".add-comment-button").click();
         }
-    });
+    };
+
+    $(".add-comment-button").click(addCommentButtonHandler).addClass("handler-registered");
+    $(".ride-comments input[type='text']").keyup(keyupCommentHandler);
 
     $("#newRideModal").modal({
         show: false
@@ -162,7 +165,51 @@ $(function () {
             $('.righttoolbox').css('top',Math.max(rightoolboxtop,$(document).scrollTop()));
         }, 100);
 
+        displayMoreRides();
     });
+
+    var busyLoadingRides = false;
+    var currentRidesPage = 1;
+    function displayMoreRides(){
+        if(busyLoadingRides)
+            return;
+
+        if($(window).scrollTop() + $(window).height() >= $(document).height()){
+            busyLoadingRides = true;
+            currentRidesPage = currentRidesPage + 1;
+            console.log("request ajax page " + currentRidesPage);
+            $.ajax({
+                url: "trips", //this is the submit URL
+                type: "GET",
+                data: {page: currentRidesPage, format: "ajax"},
+                success: function (data) {
+                    data = $.trim(data);
+                    if(data.length < 1){ // empty response
+                        currentRidesPage -= 1;
+                        busyLoadingRides = false;
+                        return;
+                    }
+
+                    $("#rides_list_col").append($(data));
+                    $(".add-comment-button").slice(-5)
+                        .not(".handler-registered")
+                        .click(addCommentButtonHandler)
+                        .addClass("handler-registered")
+                        .parents(".ride-comments")
+                        .find("input[type='text']")
+                        .keyup(keyupCommentHandler);
+
+                    busyLoadingRides = false;
+                },
+                error: function (err) {
+                    console.log("Error during ajax " + err);
+                    currentRidesPage -= 1; // to retry again
+                    busyLoadingRides = false;
+                }
+            });
+        }
+
+    }
 });
 
 var rightoolboxtop = 0;
