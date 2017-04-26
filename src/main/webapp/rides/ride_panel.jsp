@@ -12,7 +12,7 @@
 </c:set>
 <div class="row">
     <div class="panel panel-primary">
-        <div class="panel-heading ridetitle"><span class="text-primary">${ride_obj.userid}</span>
+        <div class="panel-heading ridetitle"><span class="text-primary">${ride_obj.user.fullName}</span>
             <span class="title-text"><c:out value="${ride_obj.post}" /></span>
             <div style="float: right;">
             <c:choose>

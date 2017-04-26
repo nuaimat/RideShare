@@ -140,6 +140,10 @@ public class CommentsDAO {
     public HashMap<Integer, List<Comment>> getComments(ArrayList<Integer> postIds){
         HashMap<Integer, List<Comment>> result = new HashMap<>();
 
+        if(postIds.size() < 1){
+            return result;
+        }
+
         // Turn on verbose output
         CacheConnection.setVerbose(true);
 
@@ -149,7 +153,7 @@ public class CommentsDAO {
         PreparedStatement preparedStatement = null;
         ResultSet rs  = null;
         try {
-
+            System.out.println("postIds: " + StringUtils.join(postIds, ","));
             StringBuilder idList = new StringBuilder();
             for (int id : postIds) {
                 if (idList.length() > 0) {
@@ -158,7 +162,8 @@ public class CommentsDAO {
                 idList.append("?");
             }
 
-            String query = "select c.*,u.* from comments c INNER JOIN  users u on c.userid = u.userid where postid in ("+idList+")";
+            String query = "select c.*,u.* from comments c INNER JOIN  users u on c.userid = u.userid where c.postid in ("+idList+")";
+            System.out.println("CommentsDAO.getComments " + query);
             preparedStatement = connection.prepareStatement(query);
             for (int i = 0; i < postIds.size(); i++) {
                 preparedStatement.setInt(i+1, postIds.get(i));

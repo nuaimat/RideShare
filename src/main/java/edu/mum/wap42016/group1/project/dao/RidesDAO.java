@@ -3,6 +3,7 @@ package edu.mum.wap42016.group1.project.dao;
 import edu.mum.wap42016.group1.project.model.Comment;
 import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
+import edu.mum.wap42016.group1.project.model.User;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.http.HttpServlet;
@@ -20,9 +21,12 @@ public class RidesDAO {
     }
 
 
-    public List<Ride> getRides(int from){
+    public List<Ride> getRides(int page){
         HashMap<Integer, Ride> result = new HashMap<>();
         List<Integer> postIds = new ArrayList<>();
+        int row_count = 5;
+        int offset = (page - 1)*row_count ;
+
 
         // Turn on verbose output
         CacheConnection.setVerbose(true);
@@ -36,29 +40,38 @@ public class RidesDAO {
         try {
             // Test the connection
             statement = connection.createStatement();
-            rs = statement.executeQuery(
-                    "select *, AsText(src) as srctxt, AsText(dest) as desttxt from posts order by dateupdated desc limit 30");
+            String query = "select p.*, u.*, AsText(p.src) as srctxt, AsText(p.dest) as desttxt from posts p " +
+                    "INNER JOIN users u on p.userid = u.userid " +
+                    "order by p.dateupdated desc limit " + offset  + ","  + row_count;
+            System.out.println(query);
+            rs = statement.executeQuery(query);
 
             while(rs.next()){
-                int postid = rs.getInt("postid");
+                int postid = rs.getInt("p.postid");
                 postIds.add(postid);
                 Ride ride = new Ride();
-                Timestamp timestamp = rs.getTimestamp("datecreated");
+                Timestamp timestamp = rs.getTimestamp("p.datecreated");
                 ride.setDateCreated(timestamp);
-                ride.setSrcHumanReadable(rs.getString("srcReadable"));
-                ride.setDestHumanReadable(rs.getString("destReadable"));
-                ride.setPost(rs.getString("post"));
+                ride.setSrcHumanReadable(rs.getString("p.srcReadable"));
+                ride.setDestHumanReadable(rs.getString("p.destReadable"));
+                ride.setPost(rs.getString("p.post"));
                 ride.setPostid(postid);
-                ride.setPosttype(rs.getInt("posttype") == 0? Ride.RideType.OFFERED : Ride.RideType.ASKED);
-                ride.setUserid(rs.getInt("userid"));
+                ride.setPosttype(rs.getInt("p.posttype") == 0? Ride.RideType.OFFERED : Ride.RideType.ASKED);
+                ride.setUserid(rs.getInt("p.userid"));
                 ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
                 ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
+
+                User u = new User();
+                u.setFullName(rs.getString("u.fullname"));
+                u.setUserid(rs.getInt("u.userid"));
+                ride.setUser(u);
+
 
                 result.put(postid, ride);
             }
         }
         catch (SQLException e) {
-            System.out.println("DedicatedConnection.doGet(  ) SQLException: " +
+            System.out.println("RidesDAO.getRides(  ) SQLException: " +
                     e.getMessage(  ) );
         }
         finally {
