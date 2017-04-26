@@ -7,10 +7,8 @@ import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Mo nuaimat on 4/24/17.
@@ -88,6 +86,8 @@ public class RidesDAO {
             }
             ret.add(ride);
         }
+
+        Collections.sort(ret);
 
         return ret;
     }

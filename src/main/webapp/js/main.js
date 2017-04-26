@@ -32,7 +32,9 @@ $(function () {
             type: $('#new-ride-form').attr("method"), //or POST
             data: $('#new-ride-form').serialize(),
             success: function (data) {
-                console.log('successfully submitted')
+                $rowParent = $($(".ridetitle").get(0)).closest(".row");
+                $($(data)).insertBefore($rowParent);
+                console.log($rowParent);
             },
             error: function (err) {
                 console.log("Error during ajax " + err);
@@ -54,6 +56,7 @@ $(function () {
             data: $parentForm.serialize(),
             success: function (data) {
                 console.log('successfully submitted')
+
             },
             error: function (err) {
                 console.log("Error during ajax " + err);

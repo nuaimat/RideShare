@@ -1,5 +1,7 @@
 package edu.mum.wap42016.group1.project.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mum.wap42016.group1.project.dao.RidesDAO;
 import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
@@ -43,11 +45,23 @@ public class RidesController extends HttpServlet {
         r.setDest(Location.parse(req.getParameter("ridedest_coords")));
         r.setDestHumanReadable(req.getParameter("ridedest"));
         r.setPost(req.getParameter("ridedesc"));
+        r.setUserid(1); // TODO change with user id
 
         RidesDAO ridesDAO = new RidesDAO(this);
 
+
+        // TODO change user id
         boolean saved = ridesDAO.save(r, 1);
-        res.getWriter().println(req.getParameter("ridedesc"));
+        res.setContentType("text/html");
+        if(saved) {
+            //ObjectMapper objectMapper = new ObjectMapper();
+            //objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            //res.getWriter().print(objectMapper.writeValueAsString(r));
+            req.setAttribute("ride_obj", r);
+            req.getRequestDispatcher("/rides/ride_panel.jsp").forward(req, res);
+        } else {
+            res.getWriter().print("");
+        }
 
     }
 
