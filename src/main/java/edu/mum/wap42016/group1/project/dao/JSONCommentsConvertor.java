@@ -23,10 +23,12 @@ public class JSONCommentsConvertor extends HttpServlet {
     //TO DO
     private int userid=2;
     private int postid=3;
+    private String commenttext="to be deleted";
     private String arrayToJson;
     ObjectMapper objectMapper = new ObjectMapper();
     List<Comment> commentList= new ArrayList<>();
     private List<Comment> jsonToComments;
+
 
 
     public String createCommentsJSON(){
@@ -45,6 +47,25 @@ public class JSONCommentsConvertor extends HttpServlet {
 
 
         return arrayToJson;
+    }
+
+    public String createCommentJSON(Comment comment ){
+
+        String commentJson = null;
+
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        try {
+            commentJson = objectMapper.writeValueAsString(comment);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return commentJson;
+
+
     }
 
     // Future use if needed to change JSON back to Objects
