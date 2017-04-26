@@ -92,9 +92,8 @@ public class UserDAO {
         	String req="Select * from users where email=? and password=?" ;
         	PreparedStatement preparedStatement = connection.prepareStatement(req);
         	preparedStatement.setString(1, userName);
-        	preparedStatement.setString(2, password);
-        	
-        	 preparedStatement.executeUpdate();
+        	preparedStatement.setString(2, password);        	
+        	 rs = preparedStatement.executeQuery();
 
 
 
