@@ -32,6 +32,10 @@
         <param-name>gmap_api_key</param-name>
         <param-value>AIzaSyAWPR8ffZ_ojLIHXfLm96J6Se_wS1WkHDs</param-value>
     </context-param>
+    <context-param>
+        <param-name>wmap_api_key</param-name>
+        <param-value>93602976a462f16fe1707cb642ac948d</param-value>
+    </context-param>
 
     <!-- RidesController -->
     <servlet>
