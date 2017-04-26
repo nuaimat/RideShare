@@ -12,12 +12,12 @@
         <dd>${comment.comment}</dd>
     </c:forEach>
 </dl>
-<form method="post" action="/comments" class="comment-form">
+<form method="post" action="/comments" class="comment_form">
     <div class="row">
         <div class="col-sm-10"><input type="text" class="form-control" name="comment">
             <input type="hidden" name="postid" value="${ride_obj.postid}"></div>
         <div class="col-sm-2">
-            <button type="button" class="btn btn-default add-comment-button">
+            <button type="button" class="btn btn-default add-comment-button" id="btn_${ride_obj.postid}">
                 Submit
             </button>
         </div>
