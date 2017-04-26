@@ -15,7 +15,7 @@ import edu.mum.wap42016.group1.project.model.User;
 /**
  * Servlet implementation class RegisterController
  */
-@WebServlet("/registerController")
+//@WebServlet("/registerController")
 public class RegisterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

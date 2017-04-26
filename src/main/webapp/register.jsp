@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container register">
-		<Form  method="post" action="registerController">
+		<Form  method="post" action="register">
 			Full Name:<input type="Text" name="name" placeholder="Your first name" /><br> PassWord:<input
 				type="password" name="password" placeholder="password" 
 				 /> Email:<input

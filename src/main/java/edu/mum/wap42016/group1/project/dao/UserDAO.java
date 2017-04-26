@@ -30,7 +30,7 @@ public class UserDAO {
 
 	public void addUser(String fullname, int gender, String state, String city, String street, String email,
 			String password, int birthyear, int zipcode) {
-
+System.out.println("it is in DAO");
 		// Turn on verbose output
 		CacheConnection.setVerbose(true);
 		// Get a cached connection
