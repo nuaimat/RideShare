@@ -5,6 +5,7 @@ package edu.mum.wap42016.group1.project.controller;
  */
 
 import edu.mum.wap42016.group1.project.dao.LikesDAO;
+import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
 
 import javax.servlet.ServletException;
@@ -25,10 +26,6 @@ import java.util.List;
 public class LikesController extends HttpServlet {
 
 
-    //TODO change to actual user id and postid
-   private int userid = 1;
-   private int postid = 1;
-
 
     @Override
     public void init() throws ServletException {
@@ -41,10 +38,21 @@ public class LikesController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        int res;
+        int postid  = Integer.parseInt(request.getParameter("postid"));
+        UserDAO userDAO = new UserDAO(this);
         LikesDAO likes= new LikesDAO(this);
-        likes.addLikes(userid, postid);
+
+        if(request.getParameter("action").equals("dislike")){
+            res = likes.removeLikes(userDAO.getCurrentUserId(request), postid);
+        } else {
+            res = likes.addLikes(userDAO.getCurrentUserId(request), postid);
+        }
+
+
+        response.setContentType("application/json");
+        response.getWriter().println("{\"result\" :" + res + "}");
+
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

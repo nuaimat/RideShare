@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+       version="3.1">
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
     <param-name>db_name</param-name>
@@ -62,6 +64,22 @@
     <servlet-name>commentsController</servlet-name>
     <url-pattern>/comments</url-pattern>
   </servlet-mapping>
+  <servlet>
+        <servlet-name>likes</servlet-name>
+        <servlet-class>edu.mum.wap42016.group1.project.controller.LikesController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>likes</servlet-name>
+        <url-pattern>/likes</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>WeatherController</servlet-name>
+        <servlet-class>edu.mum.wap42016.group1.project.controller.WeatherController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WeatherController</servlet-name>
+        <url-pattern>/weather</url-pattern>
+    </servlet-mapping>
   <filter>
     <filter-name>auth_filter</filter-name>
     <filter-class>edu.mum.wap42016.group1.project.filter.AuthenticationFilter</filter-class>
