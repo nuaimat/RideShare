@@ -1,49 +1,16 @@
-/**
- * Created by zaid on 4/26/2017.
- */
-
 $(function (){
-    var city = $('#weathercity').val();
-    var map;
-    var latd;
-    var long;
-    var appid = "92a0262e4445c5e338a249da33eb0d11";
-    if ((city != null)) {
-        $.ajax({
-
-            url: "http://openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + appid +"" ,
-            type: "GET",
-            dataType: "jsonp",
+    var city= "fairfield"
+    var key ="b1b15e88fa797225412429c1c50c122a1";
+    $.ajax({
+            url:"http://openweathermap.org/data/2.5/weather?q=fairfield&appid=b1b15e88fa797225412429c1c50c122a1" , //this is the submit URL
+            type:  'jsonp' , //or POST
             success: function (data) {
-
-                latd=data.coord.latitude;
-                long=data.coord.longitude;
                 console.log(data)
-
+            },
+            error: function (err) {
+                console.log("Error during ajax " + err);
             }
-
-
         });
 
-    }
-    else {
-        console.log("error on weather map load main.js")
-    }
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('currentweather'), {
-            center: {lat: latd, lng: long},
-            zoom: 8
-
-        });
-    }
 
 });
-
-
-
-
-
-
-
-//TO DO integrate with google map merge to main scripts
