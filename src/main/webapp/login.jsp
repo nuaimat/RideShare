@@ -17,7 +17,7 @@
 			PassWord:<input type="password" name="password"
 				placeholder="password" />
 			<input type="submit" value="LogIn" class="logbtn">
-			<a href="register.jsp"> SignUp </a>
+			<a href="<c:url value="/register" />"> SignUp </a>
 		</Form>
 		
 	</div>

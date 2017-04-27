@@ -9,7 +9,6 @@ import edu.mum.wap42016.group1.project.util.CacheConnection;
 import javax.servlet.http.HttpServlet;
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 /**
  * Created by Mo nuaimat on 4/24/17.
@@ -21,7 +20,7 @@ public class RidesDAO {
     }
 
 
-    public List<Ride> getRides(int page){
+    public List<Ride> getRides(int page, int currentUserId){
         HashMap<Integer, Ride> result = new HashMap<>();
         List<Integer> postIds = new ArrayList<>();
         int row_count = 5;
@@ -86,6 +85,8 @@ public class RidesDAO {
 
         CommentsDAO commentsDAO = new CommentsDAO(context);
         HashMap<Integer, List<Comment>> allComments = commentsDAO.getComments((ArrayList<Integer>) postIds); // TODO should be user id from session
+        LikesDAO likesDAO = new LikesDAO(context);
+        HashMap<Integer, Map.Entry<Integer, Boolean>> allLikes = likesDAO.getLikes((ArrayList<Integer>) postIds, currentUserId);
         System.out.println("Found " + result.size() + " rides");
         System.out.println("allComments: " + allComments);
         List<Ride> ret = new ArrayList<>();
@@ -93,6 +94,12 @@ public class RidesDAO {
             Ride ride = result.get(pid);
             if(allComments.containsKey(pid)){
                 ride.setCommentList(allComments.get(pid));
+            }
+
+            if(allLikes.containsKey(pid)){
+                Map.Entry<Integer, Boolean> likesEntry = allLikes.get(pid);
+                ride.setLikedByCurrentUser(likesEntry.getValue());
+                ride.setLikesCount(likesEntry.getKey());
             }
             ret.add(ride);
         }

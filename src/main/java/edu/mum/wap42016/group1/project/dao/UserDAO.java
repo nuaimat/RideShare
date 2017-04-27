@@ -92,6 +92,8 @@ public class UserDAO {
                 myuser.setEmail(rs.getString("email"));
                 myuser.setCity(rs.getNString("city"));
                 myuser.setStreet(rs.getString("street"));
+                myuser.setState(rs.getString("state"));
+                myuser.setZipCode(rs.getInt("zipcode"));
 
                 myuser.setUserid(rs.getInt("userid"));
             }
