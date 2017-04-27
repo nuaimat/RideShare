@@ -85,7 +85,7 @@ public class RidesController extends HttpServlet {
             List<Ride> currentRides = ridesDAO.getRides(Integer.parseInt(req.getParameter("page")), userDAO.getCurrentUserId(req)); // 1 is page number
             req.setAttribute("rides", currentRides);
             req.getRequestDispatcher("/rides/ajax_list.jsp").forward(req, res);
-        } if ("ajax_specific_ids".equals(format)) {
+        } else if ("ajax_specific_ids".equals(format)) {
             String[] stringRideIds = req.getParameter("ids").split(",");
             Set<Integer> rideIds = new HashSet<>();
             for(int i=0;i < stringRideIds.length; i++){

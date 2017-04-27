@@ -144,6 +144,7 @@ $(function () {
     };
 
     $(".like_post").click(likeEventHandler);
+    $(".unlike_post").click(dislikeEventHandler);
 
     $("#newRideModal").modal({
         show: false
@@ -267,7 +268,10 @@ $(function () {
                         .keyup(keyupCommentHandler)
                         .parents(".panel-footer")
                         .find(".like_post")
-                        .click(likeEventHandler);
+                        .click(likeEventHandler)
+                        .parents(".panel-footer")
+                        .find(".unlike_post")
+                        .click(dislikeEventHandler);
 
                     busyLoadingRides = false;
                 },

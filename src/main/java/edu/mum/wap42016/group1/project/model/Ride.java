@@ -144,7 +144,7 @@ public class Ride implements Comparable{
     }
 
     public void setLikedByCurrentUser(boolean likedByCurrentUser) {
-        likedByCurrentUser = likedByCurrentUser;
+        this.likedByCurrentUser = likedByCurrentUser;
     }
 
     public int getLikesCount() {
