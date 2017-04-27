@@ -9,6 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+    <div><h2>Sign Up</h2>					
+    <hr>
+    </div>
 	<div class="container register">
 		<Form  method="post" action="register">
 			Full Name:<input type="Text" name="name" placeholder="Your first name" /><br> PassWord:<input
