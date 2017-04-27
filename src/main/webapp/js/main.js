@@ -281,6 +281,7 @@ $(function () {
 
     }
 
+
     $("#fetch_new_rides").click(function (evt) {
         console.log("newRidesIdsQueue: " + newRidesIdsQueue.join(", "));
         evt.preventDefault();
