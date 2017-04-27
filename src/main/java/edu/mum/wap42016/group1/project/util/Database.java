@@ -47,7 +47,8 @@ public class Database {
     }
 
     public static String generateUrlString(String host, String db) {
-        return "jdbc:mysql://" + host + "/" + db + "?autoReconnect=true&autoReconnectForPools=true&" +
-                "useUnicode=true&characterEncoding=UTF-8&failOverReadOnly=false&maxReconnects=10";
+        return "jdbc:mysql://" + host + "/" + db + "?useSSL=false&serverTimezone=UTC";
+        /*return "jdbc:mysql://" + host + "/" + db + "?autoReconnect=true&autoReconnectForPools=true&" +
+                "useUnicode=true&characterEncoding=UTF-8&failOverReadOnly=false&maxReconnects=10";*/
     }
 }
