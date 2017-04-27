@@ -68,7 +68,7 @@
         </div>
         <div class="col-sm-3">
             <div class="righttoolbox">
-                some info maybe stats
+                <div id="weather" class="well" style="text-align: center;">Current Weather Loading ...</div>
             </div>
 
         </div>
