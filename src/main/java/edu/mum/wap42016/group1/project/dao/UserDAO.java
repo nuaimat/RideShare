@@ -162,7 +162,7 @@ public class UserDAO {
     }
 
 	public void updateuser(String name, String state, String email, String city, int zip, int year, String street) {
-		System.out.println("it is hereeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		
 		// TODO Auto-generated method stub
 		CacheConnection.setVerbose(true);
 
