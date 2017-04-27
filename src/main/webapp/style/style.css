@@ -156,5 +156,14 @@ body { padding-top: 70px; }
 .address1 div{	
 	margin-bottom: 1em;
 	background-color:#42f4ce;
+	overflow: auto
+	
+}
+.address1 input{
+	
+	border-radius: 0.3;
+	float:right;
+	width:5em;
+	
 	
 }
