@@ -37,7 +37,7 @@ public class EditProfileController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("i am hereeeeeeeee");
+		
 		// TODO Auto-generated method stub
 		String name= ((User) request.getSession().getAttribute("user")).getFullName();	
 		System.out.println(name);
@@ -53,7 +53,7 @@ public class EditProfileController extends HttpServlet {
 		UserDAO myUsers= new UserDAO(this);
 		myUsers.updateuser(name, state, email, city, zip, year, street);
 		
-		response.sendRedirect("login.jsp");
+		request.getRequestDispatcher("/login").forward(request, response);
 	}
 
 }
