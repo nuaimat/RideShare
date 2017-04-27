@@ -36,7 +36,7 @@ public class ProfileController extends HttpServlet {
 		UserDAO userObj = new UserDAO(this);
 		User user = userObj.getCurrentUser(request);
 		System.out.println(user.getEmail());
-		if (request.getAttribute("edit") != null) {
+		if (request.getParameter("edit") != null) {
 			System.out.println("22222222222");
 			request.getRequestDispatcher("editProfile.jsp").forward(request, response);
 			
