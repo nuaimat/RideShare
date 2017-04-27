@@ -113,7 +113,7 @@ body { padding-top: 70px; }
 }
 
 .ridedest {
-    width: 50%;float: left;margin: 0;padding: 0;box-sizing: border-box
+    width: 50%;float: left;margin: 0;padding: 0;box-sizing: border-box;
 }
 .ridedest img {
     vertical-align: top;
@@ -166,4 +166,14 @@ body { padding-top: 70px; }
 	width:5em;
 	
 	
+}
+#currentweather , #forcast{
+    border: solid 0.1em #b3b3ff ;
+    border-radius: 8em;
+}
+#currentweather {
+    float: left;
+}
+#forcast{
+    float: right;
 }

@@ -1,13 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: zaid
-  Date: 4/26/2017
-  Time: 3:40 PM
-  To change this template use File | Settings | File Templates.
---%>
-<jsp:include page="templates/header_template.jsp"/>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/tempjs/weather.js" type="text/javascript"></script>
+
+</head>
+<body>
 <h2>Hello Weather!</h2>
-<input type="hidden" name="city" value="${user.city}"></input>
-<div id="current weather"></div>
-<div id="forcast"></div>
-<jsp:include page="templates/footer_template.jsp"/>
+<input type="hidden" id="weathercity" name="weathercity" value="${user.city}"></input>
+<div id="currentweather">
+    place holder temp
+</div>
+<div id="forcast">
+    place holder temp
+</div>
+
+
+</body>
+</html>
