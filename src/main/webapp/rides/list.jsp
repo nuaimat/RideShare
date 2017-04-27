@@ -87,7 +87,7 @@
 </div>
 
 <script type="text/javascript"
-        src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async
+        src="https://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async
         defer></script>
 <jsp:include page="/rides/ws_code.jsp" />
 <jsp:include page="../templates/footer_template.jsp"/>
