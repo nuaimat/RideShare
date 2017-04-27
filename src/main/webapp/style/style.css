@@ -161,10 +161,9 @@ body { padding-top: 70px; }
 }
 .address1 input{
 	
-	border-radius: 0.3;
+	border-radius: 4px;
 	float:right;
-	width:5em;
-	
+	width:5em;	
 }
 #currentweather , #forcast{
     border: solid 0.1em #b3b3ff ;
@@ -175,17 +174,4 @@ body { padding-top: 70px; }
 }
 #forcast{
     float: right;
-}
-
-
-#new-content-message {
-    position: fixed;
-    top: 50px;
-    left: 40%;
-    width: auto;
-}
-
-#inner-message {
-    margin: 0 auto;
-    padding: 10px;
 }

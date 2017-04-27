@@ -52,6 +52,8 @@ public class EditProfileController extends HttpServlet {
 		String street=request.getParameter("street");
 		UserDAO myUsers= new UserDAO(this);
 		myUsers.updateuser(name, state, email, city, zip, year, street);
+		
+		response.sendRedirect("login.jsp");
 	}
 
 }
