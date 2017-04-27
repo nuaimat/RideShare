@@ -24,6 +24,6 @@ public class WeatherController extends HttpServlet {
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.getCurrentUser(req);
         req.setAttribute("user", user);
-        req.getRequestDispatcher("/weather.jsp").forward(req, res);
+        req.getRequestDispatcher("/weathermap.html").forward(req, res);
     }
 }
