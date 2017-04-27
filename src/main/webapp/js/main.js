@@ -99,7 +99,7 @@ $(function () {
                 $likeLink = this.likeLink;
                 var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
                 $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) + 1 + " Users");
-                $likeLink.text("Unlike");
+                $likeLink.html("Unlike <span class=\"glyphicon glyphicon-thumbs-down\"></span>");
                 $likeLink.unbind( "click" );
                 $likeLink.click(dislikeEventHandler);
 
@@ -131,7 +131,7 @@ $(function () {
                 $likeLink = this.likeLink;
                 var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
                 $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) - 1 + " Users");
-                $likeLink.text("Like");
+                $likeLink.html("Like <span class=\"glyphicon glyphicon-thumbs-up\"></span>");
                 $likeLink.unbind( "click" );
                 $likeLink.click(likeEventHandler);
 
