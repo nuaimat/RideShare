@@ -224,6 +224,7 @@ public class RidesDAO {
             {
                 last_inserted_id = rs.getInt(1);
                 System.out.println("inserted with id " + last_inserted_id);
+                r.setPostid(last_inserted_id);
             }
 
         } catch (SQLException e) {

@@ -175,3 +175,15 @@ body { padding-top: 70px; }
 #forcast{
     float: right;
 }
+
+#new-content-message {
+     position: fixed;
+     top: 50px;
+     left: 40%;
+     width: auto;
+}
+
+#inner-message {
+     margin: 0 auto;
+     padding: 10px;
+}
