@@ -26,7 +26,6 @@
 			<div>Zip code: ${sessionScope.user.zipCode}</div>
 			<div>Bithday: ${sessionScope.user.birthYear}</div>
 		</div>
-		
-		a href="<c:url value="/profile?edit=1" />"> Edit profile </a>
+		<a href="<c:url value="/profile?edit=1" />"> Edit profile </a>		
 </body>
 </html>

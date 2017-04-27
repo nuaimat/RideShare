@@ -32,14 +32,16 @@ public class ProfileController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("1111111111111111");
 		UserDAO userObj = new UserDAO(this);
 		User user = userObj.getCurrentUser(request);
 		System.out.println(user.getEmail());
-		if (request.getAttribute("edit") != null) {
-			request.getRequestDispatcher("profile.jsp").forward(request, response);//
+		if (request.getParameter("edit") != null) {
+			System.out.println("22222222222");
+			request.getRequestDispatcher("editProfile.jsp").forward(request, response);
 			
 		} else {
-			request.getRequestDispatcher("editProfile.jsp").forward(request, response);
+			request.getRequestDispatcher("profile.jsp").forward(request, response);
 		}
 
 	}

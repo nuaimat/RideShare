@@ -1,8 +1,6 @@
 package edu.mum.wap42016.group1.project.controller;
 
 import java.io.IOException;
-import java.io.Writer;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,16 +11,16 @@ import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.model.User;
 
 /**
- * Servlet implementation class RegisterController
+ * Servlet implementation class EditProfileController
  */
-//@WebServlet("/registerController")
-public class RegisterController extends HttpServlet {
+@WebServlet("/EditProfileController")
+public class EditProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterController() {
+    public EditProfileController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,34 +30,30 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		if(request.getAttribute("edit")!=null){
-			request.getRequestDispatcher("editProfiler.jsp").forward(request, response);	
-		}
-		else{
-		request.getRequestDispatcher("register.jsp").forward(request, response);
-		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
-	
-	String name= request.getParameter("name");
-	String password= request.getParameter("password");
-	String state=request.getParameter("state");
-	String email=request.getParameter("email");
-	int sex=request.getParameter("sex").equals("on")?0:1;
-	String city=request.getParameter("city");
-	int zip=Integer.parseInt(request.getParameter("zip"));
-	int year=Integer.parseInt(request.getParameter("year"));
-	String street=request.getParameter("street");
-//	User user= new User(name,sex,state,city,street,email,password,year,zip);
-	UserDAO myUsers= new UserDAO(this);
-	myUsers.addUser(name,sex,state,city,street,email,password,year,zip);	
-	response.sendRedirect("home.jsp");
+		String name= ((User) request.getSession().getAttribute("user")).getFullName();	
+		System.out.println(name);
+		String state=request.getParameter("state");
+		System.out.println(name);
+		String email=request.getParameter("email");
+		String city=request.getParameter("city");
+		System.out.println(name);
+		int zip=Integer.parseInt(request.getParameter("zip"));
+		System.out.println(name);
+		int year=Integer.parseInt(request.getParameter("year"));
+		String street=request.getParameter("street");
+		UserDAO myUsers= new UserDAO(this);
+		myUsers.updateuser(name, state, email, city, zip, year, street);
+		
+		request.getRequestDispatcher("/login").forward(request, response);
 	}
 
 }

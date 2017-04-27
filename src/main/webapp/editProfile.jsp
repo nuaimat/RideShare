@@ -13,14 +13,16 @@
 <h2>My Profile</h2>
 <div><img src="images/user.png" alt="Profile picture" "></div>
 <div class=address1>
- <div>User Name:${sessionScope.user.fullName}  <input type= "text" name="name"/></div><div>
- Email: ${sessionScope.user.email}<input type= "text" name="email"/></div><div>
- State: ${sessionScope.user.state}<input type= "text" name="state"/></div><div>
- City: ${sessionScope.user.city}<input type= "text" name="city"/></div><div>
- Street: ${sessionScope.user.street}<input type= "text" name="street"/></div><div>
- Zip code: ${sessionScope.user.zipCode}<input type= "text" name="zipcode"/></div><div>
- Bithday: ${sessionScope.user.birthYear}<input type= "text" name="birthyear"/></div>
- <input type="button" method="post" action="">
+<form method="post" action= "editprofile">
+ <div>User Name:${sessionScope.user.fullName}  </div><div>
+ Email: ${sessionScope.user.email}<input type= "text" name="email" value="${sessionScope.user.email}"/></div><div>
+ State: ${sessionScope.user.state}<input type= "text" name="state"value="${sessionScope.user.state}"/></div><div>
+ City: ${sessionScope.user.city}<input type= "text" name="city" value="${sessionScope.user.city}"/></div><div>
+ Street: ${sessionScope.user.street}<input type= "text" name="street" value="${sessionScope.user.street}"/></div><div>
+ Zip code: ${sessionScope.user.zipCode}<input type= "text" name="zip" value="${sessionScope.user.zipCode}"/></div><div>
+ Bithday: ${sessionScope.user.birthYear}<input type= "text" name="year" value="${sessionScope.user.birthYear}"/></div>
+ <input type="submit"  value="save"/>
+ </form>
 </div>
 </body>
 </html>

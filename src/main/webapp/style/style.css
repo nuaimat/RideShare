@@ -156,7 +156,14 @@ body { padding-top: 70px; }
 .address1 div{	
 	margin-bottom: 1em;
 	background-color:#42f4ce;
+	overflow: auto
 	
+}
+.address1 input{
+	
+	border-radius: 4px;
+	float:right;
+	width:5em;	
 }
 #currentweather , #forcast{
     border: solid 0.1em #b3b3ff ;

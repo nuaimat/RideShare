@@ -16,7 +16,7 @@
 			Email:<input type="Text" name="email" placeholder="email" /><br>
 			PassWord:<input type="password" name="password"
 				placeholder="password" />
-			<input type="submit" value="LogIn" class="logbtn">
+			<input type="submit" value="LogIn" class="logbtn" id="logbtn">
 			<a href="<c:url value="/register" />"> SignUp </a>
 		</Form>
 		

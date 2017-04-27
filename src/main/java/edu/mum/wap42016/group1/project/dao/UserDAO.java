@@ -136,7 +136,7 @@ public class UserDAO {
 
         return isUser;
     }
-
+ 
 
     public boolean isLoggedIn(HttpServletRequest req) {
         return req.getSession().getAttribute("user") != null;
@@ -160,6 +160,53 @@ public class UserDAO {
         else
             return null;
     }
+
+	public void updateuser(String name, String state, String email, String city, int zip, int year, String street) {
+		System.out.println("it is hereeeeeeeeeeeeeeeeeeeeeeeeeeee");
+		// TODO Auto-generated method stub
+		CacheConnection.setVerbose(true);
+
+	     Connection connection = CacheConnection.checkOut(context);
+	     PreparedStatement statement = null;
+	     ResultSet rs = null;
+	     String userName = null;
+	     try {
+	
+	         String req = "UPDATE users SET fullname=?, state=?, city=?, street=?, "
+	         		+ "zipcode=?, birthyear=?, email=?, datecreated= NOW() WHERE fullname=? ";
+	                
+	         PreparedStatement preparedStatement = connection.prepareStatement(req);
+	         preparedStatement.setString(1, name);
+	         preparedStatement.setString(2, state);
+	         preparedStatement.setString(3, city);
+	         preparedStatement.setString(4, street);
+	         preparedStatement.setInt(5, zip);
+	         preparedStatement.setInt(6, year);
+	         preparedStatement.setString(7, email);
+	         preparedStatement.setString(8, name);
+	         System.out.println(preparedStatement);
+	
+	         preparedStatement.executeUpdate();
+	
+	     } catch (SQLException e) {
+	         System.out.println("UserDAO.addUser(  ) SQLException: " + e.getMessage());
+	     } finally {
+	
+	         if (rs != null)
+	             try {
+	                 rs.close();
+	             } catch (SQLException ignore) {
+	             }
+	         if (statement != null)
+	             try {
+	                 statement.close();
+	             } catch (SQLException ignore) {
+	             }
+	     }
+	     // Return the conection
+	     CacheConnection.checkIn(connection);
+
+	}
 }
             
 		

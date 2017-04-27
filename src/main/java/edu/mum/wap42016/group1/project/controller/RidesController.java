@@ -7,6 +7,7 @@ import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.model.Location;
 import edu.mum.wap42016.group1.project.model.Ride;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
+import edu.mum.wap42016.group1.project.ws.WsServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Mo nuaimat on 4/24/17.
@@ -29,6 +33,7 @@ public class RidesController extends HttpServlet {
         //Connection connection = CacheConnection.checkOut( this ); // just to cache it
         this.getServletContext().setAttribute("gmap_api_key",
                 this.getServletContext().getInitParameter("gmap_api_key"));
+        this.getServletContext().setAttribute("WsServer", WsServer.getInstance());
     }
 
     @Override
@@ -61,6 +66,10 @@ public class RidesController extends HttpServlet {
             //res.getWriter().print(objectMapper.writeValueAsString(r));
             req.setAttribute("ride_obj", r);
             req.getRequestDispatcher("/rides/ride_panel.jsp").forward(req, res);
+
+            System.out.println("Sending a msg to wsserver");
+            WsServer wsServer = (WsServer) this.getServletContext().getAttribute("WsServer");
+            wsServer.sendMsgToAllClients("{\"ride\": "+r.getPostid()+", \"userid\": "+userDAO.getCurrentUserId(req)+"}");
         } else {
             res.getWriter().print("");
         }
@@ -76,6 +85,21 @@ public class RidesController extends HttpServlet {
             List<Ride> currentRides = ridesDAO.getRides(Integer.parseInt(req.getParameter("page")), userDAO.getCurrentUserId(req)); // 1 is page number
             req.setAttribute("rides", currentRides);
             req.getRequestDispatcher("/rides/ajax_list.jsp").forward(req, res);
+        } else if ("ajax_specific_ids".equals(format)) {
+            String[] stringRideIds = req.getParameter("ids").split(",");
+            Set<Integer> rideIds = new HashSet<>();
+            for(int i=0;i < stringRideIds.length; i++){
+                String s = stringRideIds[i];
+                rideIds.add(Integer.parseInt(s));
+            }
+
+            if(rideIds.size() > 0 ){
+                List<Ride> currentRides = ridesDAO.getRides(rideIds, userDAO.getCurrentUserId(req)); // 1 is page number
+                req.setAttribute("rides", currentRides);
+                req.getRequestDispatcher("/rides/ajax_list.jsp").forward(req, res);
+            }
+
+
         } else {
             List<Ride> currentRides = ridesDAO.getRides(1,  userDAO.getCurrentUserId(req)); // 1 is page number
             req.setAttribute("rides", currentRides);

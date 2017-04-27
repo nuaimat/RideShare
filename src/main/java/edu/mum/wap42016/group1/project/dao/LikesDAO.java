@@ -93,7 +93,7 @@ public class LikesDAO {
                 }
                 idList.append("?");
             }
-            String que = "SELECT g.c, g.postid, l.liked from\n" +
+            /* String que = "SELECT g.c, g.postid, l.liked from\n" +
                     "     (select count(*) c , postid from likes where postid in ("+idList+") group by postid) as g\n" +
                     "     left join (select userid, postid, (case when (userid = ?) \n" +
                     "      THEN\n" +
@@ -102,16 +102,29 @@ public class LikesDAO {
                     "           0 \n" +
                     "      END)\n" +
                     "      as liked \n" +
-                    "      from likes group by userid) l on g.postid = l.postid \n" +
-                    "      group by g.postid";
+                    "      from likes group by userid, postid) l on g.postid = l.postid \n" +
+                    "      group by g.postid, l.liked"; */
+
+            String que = "select lk2.postid postid, count(lk2.userid) c, sum(lk2.liked) as liked from ( \n" +
+                    "      select lk.userid, lk.postid, (case when (lk.userid = ?)\n" +
+                    "        THEN\n" +
+                    "             1\n" +
+                    "        ELSE\n" +
+                    "             0\n" +
+                    "        END)\n" +
+                    "        as liked\n" +
+                    "        from likes lk where postid in ("+idList+") \n" +
+                    ") lk2 group by lk2.postid";
 
             //System.out.println("LikesDAO.getLikesbefore " + que);
             preparedStatement = connection.prepareStatement(que);
+            int paramLocation = 1;
+            preparedStatement.setInt(paramLocation, currentUserId);
             int i = 0;
-            for (i = 0; i < postids.size(); i++) {
-                preparedStatement.setInt(i+1, postids.get(i));
+            for (i = 0; i < postids.size(); i++, paramLocation++) {
+                preparedStatement.setInt(paramLocation+1, postids.get(i));
             }
-            preparedStatement.setInt(i+1, currentUserId);
+
 
             rs = preparedStatement.executeQuery();
             System.out.println("LikesDAO.getLikes " + preparedStatement);

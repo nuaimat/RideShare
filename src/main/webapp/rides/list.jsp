@@ -23,7 +23,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form method="post" action="/trips" id="new-ride-form">
+                            <form method="post" action="<c:url value="/trips" />" id="new-ride-form">
                                 <div class="form-group">
                                     <label for="ridetype">Are you?</label>
                                     <select class="form-control" id="ridetype" name="ridetype">
@@ -75,7 +75,19 @@
     </div>
 
 </div>
+
+<div id="new-content-message">
+    <div style="padding: 5px;">
+        <div id="inner-message" class="alert alert-info fade in" style="display: none;">
+            <button type="button" class="close" data-hide="alert">&times;</button>
+            New ride posts, click <a href="#" id="fetch_new_rides">here</a> to fetch them.
+            <span style="margin-right: 5px;">&nbsp;</span>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript"
         src="http://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async
         defer></script>
+<jsp:include page="/rides/ws_code.jsp" />
 <jsp:include page="../templates/footer_template.jsp"/>

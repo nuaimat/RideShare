@@ -99,7 +99,7 @@ $(function () {
                 $likeLink = this.likeLink;
                 var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
                 $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) + 1 + " Users");
-                $likeLink.text("Unlike");
+                $likeLink.html("Unlike <span class=\"glyphicon glyphicon-thumbs-down\"></span>");
                 $likeLink.unbind( "click" );
                 $likeLink.click(dislikeEventHandler);
 
@@ -131,7 +131,7 @@ $(function () {
                 $likeLink = this.likeLink;
                 var oldText = $likeLink.parents(".ride-likes").find("span.text-primary").text();
                 $likeLink.parents(".ride-likes").find("span.text-primary").text(parseInt(oldText) - 1 + " Users");
-                $likeLink.text("Like");
+                $likeLink.html("Like <span class=\"glyphicon glyphicon-thumbs-up\"></span>");
                 $likeLink.unbind( "click" );
                 $likeLink.click(likeEventHandler);
 
@@ -144,6 +144,7 @@ $(function () {
     };
 
     $(".like_post").click(likeEventHandler);
+    $(".unlike_post").click(dislikeEventHandler);
 
     $("#newRideModal").modal({
         show: false
@@ -267,7 +268,10 @@ $(function () {
                         .keyup(keyupCommentHandler)
                         .parents(".panel-footer")
                         .find(".like_post")
-                        .click(likeEventHandler);
+                        .click(likeEventHandler)
+                        .parents(".panel-footer")
+                        .find(".unlike_post")
+                        .click(dislikeEventHandler);
 
                     busyLoadingRides = false;
                 },
@@ -281,6 +285,43 @@ $(function () {
 
     }
 
+
+    $("#fetch_new_rides").click(function (evt) {
+        console.log("newRidesIdsQueue: " + newRidesIdsQueue.join(", "));
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        $("#inner-message").hide();
+
+        $.ajax({
+            url: $('#new-ride-form').attr("action"), //this is the submit URL
+            type: "GET", //or POST
+            data: {"format": "ajax_specific_ids", "ids": newRidesIdsQueue.reverse().join(",")},
+            success: function (data) {
+                $("html, body").animate({ scrollTop: 0 }, "fast");
+
+                $rowParent = $($(".ridetitle").get(0)).closest(".row");
+                $($(data)).insertBefore($rowParent);
+                // re-attach handlers to new ajax content
+                $(".add-comment-button")
+                    .not(".handler-registered")
+                    .click(addCommentButtonHandler)
+                    .addClass("handler-registered")
+                    .parents(".panel-footer").find(".like_post").click(likeEventHandler);
+
+                newRidesIdsQueue.length = 0; // remove all pending ids
+            },
+            error: function (err) {
+                console.log("Error during ajax " + err);
+            }
+        });
+
+    })
+
+    $("#inner-message").hide();
+    $("[data-hide]").on("click", function(){
+        $(this).closest("." + $(this).attr("data-hide")).hide();
+    });
 
 
 });
