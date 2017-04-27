@@ -7,7 +7,7 @@
 --%>
 <script type="text/javascript">
     var newRidesIdsQueue = [];
-    startWebSocketConnection("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocketendpoint");
+    startWebSocketConnection("//${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/websocketendpoint");
 
     function startWebSocketConnection(websocketServerLocation){
         var webSocket = new WebSocket(websocketServerLocation);
