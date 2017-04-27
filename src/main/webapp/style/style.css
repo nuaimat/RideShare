@@ -159,7 +159,8 @@ body { padding-top: 70px; }
 	overflow: auto
 	
 }
-.address1 input{	
+.address1 input{
+	
 	border-radius: 4px;
 	float:right;
 	width:5em;	

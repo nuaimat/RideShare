@@ -20,6 +20,91 @@ public class RidesDAO {
     }
 
 
+    public List<Ride> getRides(Set<Integer> rideIds, int currentUserId){
+        HashMap<Integer, Ride> result = new HashMap<>();
+        List<Integer> postIds = new ArrayList<>(rideIds);
+
+        // Turn on verbose output
+        CacheConnection.setVerbose(true);
+
+        // Get a cached connection
+        Connection connection = CacheConnection.checkOut( context );
+
+        Statement statement  = null;
+        ResultSet rs  = null;
+        String     userName   = null;
+        try {
+            // Test the connection
+            statement = connection.createStatement();
+            String query = "select p.*, u.*, AsText(p.src) as srctxt, AsText(p.dest) as desttxt from posts p " +
+                    "INNER JOIN users u on p.userid = u.userid " +
+                    "order by p.dateupdated desc";
+            System.out.println(query);
+            rs = statement.executeQuery(query);
+
+            while(rs.next()){
+                int postid = rs.getInt("p.postid");
+                Ride ride = new Ride();
+                Timestamp timestamp = rs.getTimestamp("p.datecreated");
+                ride.setDateCreated(timestamp);
+                ride.setSrcHumanReadable(rs.getString("p.srcReadable"));
+                ride.setDestHumanReadable(rs.getString("p.destReadable"));
+                ride.setPost(rs.getString("p.post"));
+                ride.setPostid(postid);
+                ride.setPosttype(rs.getInt("p.posttype") == 0? Ride.RideType.OFFERED : Ride.RideType.ASKED);
+                ride.setUserid(rs.getInt("p.userid"));
+                ride.setSrc(Location.parseMysqlSpatialFormat(rs.getString("srctxt")));
+                ride.setDest(Location.parseMysqlSpatialFormat(rs.getString("desttxt")));
+
+                User u = new User();
+                u.setFullName(rs.getString("u.fullname"));
+                u.setUserid(rs.getInt("u.userid"));
+                ride.setUser(u);
+
+
+                result.put(postid, ride);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("RidesDAO.getRides(  ) SQLException: " +
+                    e.getMessage(  ) );
+        }
+        finally {
+            if (rs != null)
+                try { rs.close(  ); } catch (SQLException ignore) { }
+            if (statement != null)
+                try { statement.close(  ); } catch (SQLException ignore) { }
+        }
+
+        // Return the conection
+        CacheConnection.checkIn(connection);
+
+        CommentsDAO commentsDAO = new CommentsDAO(context);
+        HashMap<Integer, List<Comment>> allComments = commentsDAO.getComments((ArrayList<Integer>) postIds); // TODO should be user id from session
+        LikesDAO likesDAO = new LikesDAO(context);
+        HashMap<Integer, Map.Entry<Integer, Boolean>> allLikes = likesDAO.getLikes((ArrayList<Integer>) postIds, currentUserId);
+        System.out.println("Found " + result.size() + " rides");
+        System.out.println("allComments: " + allComments);
+        List<Ride> ret = new ArrayList<>();
+        for(Integer pid:result.keySet()){
+            Ride ride = result.get(pid);
+            if(allComments.containsKey(pid)){
+                ride.setCommentList(allComments.get(pid));
+            }
+
+            if(allLikes.containsKey(pid)){
+                Map.Entry<Integer, Boolean> likesEntry = allLikes.get(pid);
+                ride.setLikedByCurrentUser(likesEntry.getValue());
+                ride.setLikesCount(likesEntry.getKey());
+            }
+            ret.add(ride);
+        }
+
+        Collections.sort(ret);
+
+        return ret;
+    }
+
     public List<Ride> getRides(int page, int currentUserId){
         HashMap<Integer, Ride> result = new HashMap<>();
         List<Integer> postIds = new ArrayList<>();
