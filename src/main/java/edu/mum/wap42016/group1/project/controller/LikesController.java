@@ -7,6 +7,7 @@ package edu.mum.wap42016.group1.project.controller;
 import edu.mum.wap42016.group1.project.dao.LikesDAO;
 import edu.mum.wap42016.group1.project.dao.UserDAO;
 import edu.mum.wap42016.group1.project.util.CacheConnection;
+import edu.mum.wap42016.group1.project.ws.WsServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +39,8 @@ public class LikesController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         int res;
         int postid  = Integer.parseInt(request.getParameter("postid"));
         UserDAO userDAO = new UserDAO(this);

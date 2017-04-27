@@ -158,3 +158,15 @@ body { padding-top: 70px; }
 	background-color:#42f4ce;
 	
 }
+
+#new-content-message {
+    position: fixed;
+    top: 50px;
+    left: 40%;
+    width: auto;
+}
+
+#inner-message {
+    margin: 0 auto;
+    padding: 10px;
+}
