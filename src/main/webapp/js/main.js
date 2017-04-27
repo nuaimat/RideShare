@@ -86,7 +86,7 @@ $(function () {
         $parentForm = $(this).parents(".panel-footer").find(".comment_form");
 
         $.ajax({
-            url: "/likes", //this is the submit URL
+            url: "likes", //this is the submit URL
             type: "POST", //or POST
             data: {postid: $parentForm.find("input[name='postid']").val(), action: "like" },
             likeLink: $(this),
@@ -118,7 +118,7 @@ $(function () {
         $parentForm = $(this).parents(".panel-footer").find(".comment_form");
 
         $.ajax({
-            url: "/likes", //this is the submit URL
+            url: "likes", //this is the submit URL
             type: "POST", //or POST
             data: {postid: $parentForm.find("input[name='postid']").val(), action: "dislike" },
             likeLink: $(this),
