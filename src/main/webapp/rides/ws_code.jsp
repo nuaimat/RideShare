@@ -11,7 +11,7 @@
     if(location.protocol == "https:"){
         wsProtocol = "wss://";
     }
-    startWebSocketConnection(wsProtocol + "${pageContext.request.serverName}${pageContext.request.contextPath}/websocketendpoint");
+    startWebSocketConnection(wsProtocol + "${pageContext.request.serverName}:"+location.port+"${pageContext.request.contextPath}/websocketendpoint");
 
     function startWebSocketConnection(websocketServerLocation){
         var webSocket = new WebSocket(websocketServerLocation);

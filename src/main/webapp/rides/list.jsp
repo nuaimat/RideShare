@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../templates/header_template.jsp"/>
+<jsp:include page="../templates/header_template.jsp">
+    <jsp:param name="title" value="Ride Share"/>
+</jsp:include>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3">
@@ -87,7 +89,7 @@
 </div>
 
 <script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places&sensor=false" async
+        src="https://maps.googleapis.com/maps/api/js?key=${gmap_api_key}&libraries=places" async
         defer></script>
 <jsp:include page="/rides/ws_code.jsp" />
 <jsp:include page="../templates/footer_template.jsp"/>
