@@ -7,21 +7,25 @@
   </context-param>
   <context-param>
     <param-name>db_host</param-name>
-    <param-value>us-cdbr-iron-east-03.cleardb.net</param-value>
+    <!--<param-value>us-cdbr-iron-east-03.cleardb.net</param-value>-->
+    <param-value>database</param-value>
   </context-param>
   <context-param>
     <param-name>db_username</param-name>
-    <param-value>b98acd66dd48b0</param-value>
+    <param-value>root</param-value>
   </context-param>
   <context-param>
     <param-name>db_password</param-name>
-    <param-value>632d4fc7</param-value>
+    <param-value>root</param-value>
   </context-param>
   <context-param>
     <param-name>db_conn_string</param-name>
-    <param-value>
+    <!--<param-value>
             mysql://b98acd66dd48b0:632d4fc7@us-cdbr-iron-east-03.cleardb.net/heroku_8817d68b4a21fb3?reconnect=true
-        </param-value>
+    </param-value>-->
+    <param-value>
+      jdbc:mysql://database:3306/heroku_8817d68b4a21fb3
+    </param-value>
   </context-param>
   <context-param>
     <param-name>gmap_api_key</param-name>

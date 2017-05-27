@@ -1,0 +1,23 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: rideshare_web
+    ports:
+     - "18080:8080"
+    links:
+     - database
+  database:
+    image: mysql:latest
+    container_name: rideshare_database
+    command: mysqld --user=root --verbose
+    volumes:
+        - ./otherfiles/dump.sql:/docker-entrypoint-initdb.d/rideshare_data.sql
+    ports:
+        - "3306:3306"
+    environment:
+        MYSQL_DATABASE: "test"
+        MYSQL_USER: "test"
+        MYSQL_PASSWORD: "test"
+        MYSQL_ROOT_PASSWORD: "root"
+        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
